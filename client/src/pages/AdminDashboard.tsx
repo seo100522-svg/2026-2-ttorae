@@ -9,8 +9,9 @@ import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, Download } from "lucide-react";
 import { useLocation } from "wouter";
+import { exportApplicationsToExcel } from "@/lib/excelExport";
 
 const STATUS_LABELS = {
   pending: "대기",
@@ -107,6 +108,20 @@ export default function AdminDashboard() {
     setSelectedApplication(app);
   };
 
+  const handleExportToExcel = () => {
+    if (!applications || applications.length === 0) {
+      toast.error("내보낼 신청 데이터가 없습니다.");
+      return;
+    }
+    try {
+      exportApplicationsToExcel(applications);
+      toast.success("엑셀 파일이 다운로드되었습니다.");
+    } catch (error) {
+      toast.error("엑셀 파일 생성에 실패했습니다.");
+      console.error(error);
+    }
+  };
+
   if (isChecking) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center">
@@ -197,6 +212,18 @@ export default function AdminDashboard() {
               </p>
             </CardContent>
           </Card>
+        </div>
+
+        {/* Export Button */}
+        <div className="mb-8 flex justify-end">
+          <Button
+            onClick={handleExportToExcel}
+            disabled={isLoading || !applications || applications.length === 0}
+            className="bg-slate-700 hover:bg-slate-800 text-white"
+          >
+            <Download className="w-4 h-4 mr-2" />
+            엑셀로 내보내기
+          </Button>
         </div>
 
         {/* Filters */}

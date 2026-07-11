@@ -90,12 +90,23 @@ export async function getUserByOpenId(openId: string) {
 }
 
 /**
- * 또래친구 신청 정보 조회
+ * 또래친구 신청 정보 조회 (척도 검사 결과 포함)
  */
 export async function getApplications(limit = 50, offset = 0) {
   const db = await getDb();
   if (!db) return [];
-  return db.select().from(applications).limit(limit).offset(offset);
+  
+  const apps = await db.select().from(applications).limit(limit).offset(offset);
+  
+  // 각 신청에 대한 척도 검사 결과 추가
+  const appsWithScale = await Promise.all(
+    apps.map(async (app) => {
+      const scale = await getScaleResponse(app.id);
+      return { ...app, scale };
+    })
+  );
+  
+  return appsWithScale;
 }
 
 /**
