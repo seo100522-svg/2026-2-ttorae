@@ -118,7 +118,19 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
+    font-family: "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold;
+    font-family: "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+  }
+  .subtitle, .description {
+    font-family: "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.01em;
   }
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),
