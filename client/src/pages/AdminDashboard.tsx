@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -51,8 +51,25 @@ export default function AdminDashboard() {
   const [selectedApplication, setSelectedApplication] = useState<ApplicationDetail | null>(null);
   const [statusFilter, setStatusFilter] = useState<"all" | "pending" | "matched" | "cancelled">("all");
   const [searchTerm, setSearchTerm] = useState("");
+  const [isAuthorized, setIsAuthorized] = useState(false);
+  const [isChecking, setIsChecking] = useState(true);
 
-  const { data: applications, isLoading, refetch } = trpc.applications.list.useQuery();
+  const { data: user } = trpc.auth.me.useQuery();
+
+  useEffect(() => {
+    if (user !== undefined) {
+      setIsChecking(false);
+      if (!user || user.role !== "admin") {
+        setIsAuthorized(false);
+      } else {
+        setIsAuthorized(true);
+      }
+    }
+  }, [user]);
+
+  const { data: applications, isLoading, refetch } = trpc.applications.list.useQuery(undefined, {
+    enabled: isAuthorized,
+  });
   const updateStatusMutation = trpc.applications.updateStatus.useMutation();
 
   const filteredApplications = (applications || [])
@@ -89,6 +106,34 @@ export default function AdminDashboard() {
   const handleViewDetails = (app: any) => {
     setSelectedApplication(app);
   };
+
+  if (isChecking) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-slate-600">로딩 중...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!isAuthorized) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center">
+        <Card className="border-0 shadow-md max-w-md">
+          <CardHeader>
+            <CardTitle className="text-red-600">접근 권한 없음</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <p className="text-slate-600">관리자만 접근할 수 있는 페이지입니다.</p>
+            <Button onClick={() => navigate("/")} className="w-full">
+              홈으로 돌아가기
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">

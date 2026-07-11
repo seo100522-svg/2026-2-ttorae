@@ -1,7 +1,7 @@
 import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
-import { publicProcedure, router } from "./_core/trpc";
+import { publicProcedure, router, adminProcedure } from "./_core/trpc";
 import { getApplications, getApplicationById, getScaleResponse, createApplication, createScaleResponse, updateApplicationStatus } from "./db";
 
 export const appRouter = router({
@@ -22,13 +22,13 @@ export const appRouter = router({
     /**
      * 또래친구 신청 목록 조회 (관리자 전용)
      */
-    list: publicProcedure.query(async () => {
+    list: adminProcedure.query(async () => {
       return getApplications(100, 0);
     }),
     /**
      * 또래친구 신청 조회 (상세 정보)
      */
-    getById: publicProcedure
+    getById: adminProcedure
       .input((val: unknown) => {
         if (typeof val === "object" && val !== null && "id" in val) {
           return { id: Number((val as { id: unknown }).id) };
@@ -93,7 +93,7 @@ export const appRouter = router({
     /**
      * 또래친구 신청 상태 업데이트
      */
-    updateStatus: publicProcedure
+    updateStatus: adminProcedure
       .input((val: unknown) => {
         if (typeof val === "object" && val !== null) {
           const data = val as Record<string, unknown>;
