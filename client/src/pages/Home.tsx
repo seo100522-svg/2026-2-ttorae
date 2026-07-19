@@ -10,7 +10,7 @@ export default function Home() {
       {/* Navigation */}
       <nav className="bg-white/80 backdrop-blur-sm border-b border-slate-200 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <h1 className="text-xl font-bold text-slate-900">또래상담 Peers</h1>
+          <h1 className="text-xl font-bold text-slate-900">또래소담 프로그램</h1>
           <Button
             onClick={() => navigate("/apply")}
             className="bg-slate-700 hover:bg-slate-800"
@@ -26,13 +26,13 @@ export default function Home() {
           <div className="space-y-6">
             <div>
               <h2 className="text-4xl md:text-5xl font-bold text-slate-900 leading-tight mb-2">
-                대학생활의 든든한 동반자,<br />또래상담자 Peers
+                대학생활의 든든한 동반자,<br />또래소담 프로그램
               </h2>
               <p className="text-lg text-slate-600 mb-4">
-                학교생활, 인간관계, 진로 등 대학생활의 고민을 또래상담자와 편안하게 나누어 보세요.
+                학교생활, 인간관계, 진로 등 대학생활의 고민을 또래소담 프로그램을 통해 편안하게 나누어 보세요.
               </p>
               <p className="text-sm text-slate-500 mb-6">
-                이 페이지는 또래상담에 참여할 '또래친구' 신청 페이지입니다.
+                이 페이지는 또래소담 프로그램에 참여할 '또래친구' 신청 페이지입니다.
               </p>
             </div>
             <Button
@@ -62,14 +62,14 @@ export default function Home() {
       <section className="bg-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h3 className="text-3xl font-bold text-slate-900 text-center mb-12">
-            또래상담 Peers는 어떤 프로그램인가요?
+            또래소담 프로그램은 어떤 프로그램인가요?
           </h3>
 
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {
                 title: "재학생을 위한 1:1 상담",
-                description: "교육을 받은 또래상담자와 일대일로 진행되는 상담입니다.",
+                description: "또래소담 프로그램의 또래친구와 일대일로 진행되는 상담입니다.",
                 icon: "👥",
               },
               {
@@ -134,7 +134,7 @@ export default function Home() {
             지금 바로 신청하세요
           </h3>
           <p className="text-lg text-slate-600 mb-8">
-            신청 후 담당자가 연락하여 또래상담자를 매칭해드립니다.
+            신청 후 담당자가 연락하여 또래소담 프로그램의 또래친구를 매칭해드립니다.
           </p>
           <Button
             onClick={() => navigate("/apply")}
