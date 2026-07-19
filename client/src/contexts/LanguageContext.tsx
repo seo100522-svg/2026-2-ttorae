@@ -11,6 +11,121 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 const translations: Record<Language, Record<string, string>> = {
+  en: {
+    // Navigation
+    "nav.back": "Back",
+    "nav.apply": "Apply",
+    
+    // Step titles
+    "step.1.title": "Basic Information",
+    "step.2.title": "Application Type",
+    "step.3.title": "Concerns & Additional Info",
+    "step.4.title": "University Adaptation Scale",
+    "step.5.title": "Consent & Agreement",
+    
+    // Step descriptions
+    "step.1.desc": "Please enter your basic information.",
+    "step.2.desc": "Please select your application type.",
+    "step.3.desc": "Please select your concerns.",
+    "step.4.desc": "Please rate your adaptation.",
+    "step.5.desc": "Please review and agree to the terms.",
+    
+    // Form labels
+    "form.name": "Name",
+    "form.studentId": "Student ID",
+    "form.phone": "Phone",
+    "form.college": "College",
+    "form.collegeOther": "Enter College",
+    "form.department": "Department",
+    "form.gender": "Gender",
+    "form.gender.male": "Male",
+    "form.gender.female": "Female",
+    "form.gender.other": "Other",
+    "form.nationality": "Nationality",
+    "form.nationality.local": "Domestic",
+    "form.nationality.international": "International Student",
+    "form.nationality.input": "Enter Nationality",
+    
+    // Application type
+    "form.applicationType": "Application Type",
+    "form.applicationType.referred": "1. Referred by a peer counselor",
+    "form.applicationType.direct": "2. Self-application",
+    "form.counselorName": "Counselor Name",
+    "form.availableTime": "Available Time",
+    "form.availableTime.day": "Day",
+    "form.availableTime.start": "Start",
+    "form.availableTime.end": "End",
+    
+    // Topics
+    "form.topics": "Concerns",
+    "form.topics.relationships": "Relationships",
+    "form.topics.dating": "Dating",
+    "form.topics.family": "Family",
+    "form.topics.academics": "Academics",
+    "form.topics.career": "Career",
+    "form.topics.adaptation": "University Adjustment",
+    "form.topics.stress": "Stress",
+    "form.topics.loneliness": "Loneliness",
+    "form.topics.confidence": "Confidence",
+    "form.topics.unsure": "Not sure yet",
+    "form.topics.other": "Other",
+    
+    // Story details
+    "form.storyDetails": "Additional Notes",
+    "form.storyDetails.placeholder": "Please share any additional information.",
+    
+    // Scale questions
+    "scale.instruction": "Please rate the following statements from 1-5.",
+    "scale.q1": "I am well adapted to the overall atmosphere of this university.",
+    "scale.q2": "I have friends on campus with whom I can comfortably share my concerns.",
+    "scale.q3": "I am interested in my studies and find studying satisfying.",
+    "scale.q4": "I actively participate in various campus activities.",
+    "scale.q5": "Overall, I am satisfied with my university life.",
+    "scale.disagree": "Strongly Disagree",
+    "scale.agree": "Strongly Agree",
+    
+    // Agreements
+    "agreement.confidentiality": "Confidentiality & Exceptions",
+    "agreement.confidentiality.desc": "We guarantee confidentiality. However, exceptions apply in the following cases:",
+    "agreement.confidentiality.suicide": "Risk of suicide",
+    "agreement.confidentiality.harm": "Risk of harm to others",
+    "agreement.confidentiality.legal": "Legal reporting obligations",
+    "agreement.privacy": "I agree to the collection and use of personal information.",
+    "agreement.terms": "I agree to the program guidelines.",
+    "agreement.confidentiality.check": "I agree to confidentiality and exceptions.",
+    
+    // Buttons
+    "button.prev": "Previous",
+    "button.next": "Next",
+    "button.submit": "Submit",
+    "button.submitting": "Submitting...",
+    "button.home": "Back to Home",
+    
+    // Success message
+    "success.title": "Application Submitted!",
+    "success.referred": "Enjoy your counseling session.",
+    "success.direct": "We will contact you based on your available times.",
+    "success.desc": "We will contact you after reviewing your application.",
+    
+    // Error messages
+    "error.name": "Please enter your name.",
+    "error.studentId": "Please enter your student ID.",
+    "error.phone": "Please enter your phone number.",
+    "error.college": "Please select a college.",
+    "error.collegeOther": "Please enter a college.",
+    "error.department": "Please enter your department.",
+    "error.gender": "Please select your gender.",
+    "error.nationality": "Please enter your nationality.",
+    "error.applicationType": "Please select an application type.",
+    "error.counselorName": "Please enter the counselor name.",
+    "error.topics": "Please select at least one concern.",
+    "error.scale": "Please answer all scale questions.",
+    "error.privacy": "Please agree to personal information collection.",
+    "error.terms": "Please agree to the program guidelines.",
+    "error.confidentiality": "Please agree to confidentiality terms.",
+    "error.submission": "An error occurred during submission.",
+    "success.submission": "Application submitted successfully!",
+  },
   ko: {
     // Navigation
     "nav.back": "돌아가기",
@@ -240,121 +355,6 @@ const translations: Record<Language, Record<string, string>> = {
     "error.confidentiality": "秘密保持と例外事項の案内に同意してください。",
     "error.submission": "申し込み中にエラーが発生しました。",
     "success.submission": "申し込みが完了しました！",
-  },
-  en: {
-    // Navigation
-    "nav.back": "Back",
-    "nav.apply": "Apply",
-    
-    // Step titles
-    "step.1.title": "Basic Information",
-    "step.2.title": "Application Type",
-    "step.3.title": "Concerns & Additional Info",
-    "step.4.title": "University Adaptation Scale",
-    "step.5.title": "Consent & Agreement",
-    
-    // Step descriptions
-    "step.1.desc": "Please enter your basic information.",
-    "step.2.desc": "Please select your application type.",
-    "step.3.desc": "Please select your concerns.",
-    "step.4.desc": "Please rate your adaptation.",
-    "step.5.desc": "Please review and agree to the terms.",
-    
-    // Form labels
-    "form.name": "Name",
-    "form.studentId": "Student ID",
-    "form.phone": "Phone",
-    "form.college": "College",
-    "form.collegeOther": "Enter College",
-    "form.department": "Department",
-    "form.gender": "Gender",
-    "form.gender.male": "Male",
-    "form.gender.female": "Female",
-    "form.gender.other": "Other",
-    "form.nationality": "Nationality",
-    "form.nationality.local": "Domestic",
-    "form.nationality.international": "International Student",
-    "form.nationality.input": "Enter Nationality",
-    
-    // Application type
-    "form.applicationType": "Application Type",
-    "form.applicationType.referred": "1. Referred by a peer counselor",
-    "form.applicationType.direct": "2. Self-application",
-    "form.counselorName": "Counselor Name",
-    "form.availableTime": "Available Time",
-    "form.availableTime.day": "Day",
-    "form.availableTime.start": "Start",
-    "form.availableTime.end": "End",
-    
-    // Topics
-    "form.topics": "Concerns",
-    "form.topics.relationships": "Relationships",
-    "form.topics.dating": "Dating",
-    "form.topics.family": "Family",
-    "form.topics.academics": "Academics",
-    "form.topics.career": "Career",
-    "form.topics.adaptation": "University Adjustment",
-    "form.topics.stress": "Stress",
-    "form.topics.loneliness": "Loneliness",
-    "form.topics.confidence": "Confidence",
-    "form.topics.unsure": "Not sure yet",
-    "form.topics.other": "Other",
-    
-    // Story details
-    "form.storyDetails": "What you'd like to discuss - Notes",
-    "form.storyDetails.placeholder": "Please feel free to write what you'd like to discuss.",
-    
-    // Scale questions
-    "scale.instruction": "Please rate each statement from 1 to 5.",
-    "scale.q1": "I am well adapted to the overall atmosphere of this university.",
-    "scale.q2": "I have a friend on campus with whom I can comfortably share my concerns.",
-    "scale.q3": "I am interested in my studies and find studying satisfying.",
-    "scale.q4": "I actively participate in various campus activities.",
-    "scale.q5": "Overall, I am satisfied with my university life.",
-    "scale.disagree": "Strongly Disagree",
-    "scale.agree": "Strongly Agree",
-    
-    // Agreements
-    "agreement.confidentiality": "Confidentiality & Exceptions Notice",
-    "agreement.confidentiality.desc": "The program guarantees confidentiality of counseling content. However, exceptions apply in the following cases:",
-    "agreement.confidentiality.suicide": "When there is suicide risk",
-    "agreement.confidentiality.harm": "When there is risk of direct harm to others",
-    "agreement.confidentiality.legal": "When legally required to report",
-    "agreement.privacy": "I agree to the collection and use of personal information.",
-    "agreement.terms": "I agree to the program operation guidelines.",
-    "agreement.confidentiality.check": "I agree to the confidentiality and exceptions notice.",
-    
-    // Buttons
-    "button.prev": "Previous",
-    "button.next": "Next",
-    "button.submit": "Submit",
-    "button.submitting": "Submitting...",
-    "button.home": "Go Home",
-    
-    // Success message
-    "success.title": "Application submitted successfully!",
-    "success.referred": "Look forward to counseling with your counselor.",
-    "success.direct": "We will proceed with counseling according to your available time.",
-    "success.desc": "We will contact you after reviewing your application.",
-    
-    // Error messages
-    "error.name": "Please enter your name.",
-    "error.studentId": "Please enter your student ID.",
-    "error.phone": "Please enter your phone number.",
-    "error.college": "Please select your college.",
-    "error.collegeOther": "Please enter your college.",
-    "error.department": "Please enter your department.",
-    "error.gender": "Please select your gender.",
-    "error.nationality": "Please enter your nationality.",
-    "error.applicationType": "Please select application type.",
-    "error.counselorName": "Please enter counselor name.",
-    "error.topics": "Please select a concern area.",
-    "error.scale": "Please answer all questions.",
-    "error.privacy": "Please agree to the collection and use of personal information.",
-    "error.terms": "Please agree to the program operation guidelines.",
-    "error.confidentiality": "Please agree to the confidentiality and exceptions notice.",
-    "error.submission": "An error occurred during submission.",
-    "success.submission": "Application submitted successfully!",
   },
 };
 

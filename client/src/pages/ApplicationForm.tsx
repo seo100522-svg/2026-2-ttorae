@@ -102,7 +102,7 @@ interface FormData {
 
 export default function ApplicationForm() {
   const [, navigate] = useLocation();
-  const { language, setLanguage } = useLanguage();
+  const { language, setLanguage, t } = useLanguage();
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
@@ -591,13 +591,26 @@ export default function ApplicationForm() {
                             }
                           }}
                         />
-                        <Label htmlFor={topic.value} className="font-normal cursor-pointer">{topic.label}</Label>
+                        <Label htmlFor={topic.value} className="font-normal cursor-pointer">
+                          {language === "ko" ? topic.label : t(`form.topics.${topic.value.toLowerCase().replace(/\s+/g, "")}`)}
+                        </Label>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                {formData.topics.includes("기타") && (
+                {formData.topics.includes("Other") && language !== "ko" && (
+                  <div>
+                    <Label htmlFor="topicsOther">{t("form.topics.other")} {t("form.storyDetails")}</Label>
+                    <Input
+                      id="topicsOther"
+                      value={formData.topicsOther}
+                      onChange={(e) => setFormData({ ...formData, topicsOther: e.target.value })}
+                      placeholder={t("form.storyDetails.placeholder")}
+                    />
+                  </div>
+                )}
+                {formData.topics.includes("기타") && language === "ko" && (
                   <div>
                     <Label htmlFor="topicsOther">{language === "ko" ? "기타 고민 영역 *" : "Other Concerns *"}</Label>
                     <Input
