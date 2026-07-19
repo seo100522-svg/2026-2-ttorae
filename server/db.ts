@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, applications, scaleResponses, InsertApplication, InsertScaleResponse } from "../drizzle/schema";
+import { InsertUser, users } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -89,72 +89,4 @@ export async function getUserByOpenId(openId: string) {
   return result.length > 0 ? result[0] : undefined;
 }
 
-/**
- * 또래친구 신청 정보 조회 (척도 검사 결과 포함)
- */
-export async function getApplications(limit = 50, offset = 0) {
-  const db = await getDb();
-  if (!db) return [];
-  
-  const apps = await db.select().from(applications).limit(limit).offset(offset);
-  
-  // 각 신청에 대한 척도 검사 결과 추가
-  const appsWithScale = await Promise.all(
-    apps.map(async (app) => {
-      const scale = await getScaleResponse(app.id);
-      return { ...app, scale };
-    })
-  );
-  
-  return appsWithScale;
-}
-
-/**
- * 또래친구 신청 조회 (ID로)
- */
-export async function getApplicationById(id: number) {
-  const db = await getDb();
-  if (!db) return undefined;
-  const result = await db.select().from(applications).where(eq(applications.id, id)).limit(1);
-  return result.length > 0 ? result[0] : undefined;
-}
-
-/**
- * 또래친구 신청 생성
- */
-export async function createApplication(data: InsertApplication) {
-  const db = await getDb();
-  if (!db) throw new Error("Database not available");
-  const result = await db.insert(applications).values(data);
-  return result as any;
-}
-
-/**
- * 또래친구 신청 상태 업데이트
- */
-export async function updateApplicationStatus(id: number, status: "pending" | "matched" | "cancelled") {
-  const db = await getDb();
-  if (!db) throw new Error("Database not available");
-  return db.update(applications).set({ status, updatedAt: new Date() }).where(eq(applications.id, id));
-}
-
-/**
- * 척도 검사 응답 조회
- */
-export async function getScaleResponse(applicationId: number) {
-  const db = await getDb();
-  if (!db) return undefined;
-  const result = await db.select().from(scaleResponses).where(eq(scaleResponses.applicationId, applicationId)).limit(1);
-  return result.length > 0 ? result[0] : undefined;
-}
-
-/**
- * 척도 검사 응답 생성
- */
-export async function createScaleResponse(data: InsertScaleResponse) {
-  const db = await getDb();
-  if (!db) throw new Error("Database not available");
-  return db.insert(scaleResponses).values(data) as any;
-}
-
-
+// TODO: add feature queries here as your schema grows.

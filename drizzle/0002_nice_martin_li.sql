@@ -1,1 +1,0 @@
-ALTER TABLE `applications` ADD `gender` enum('male','female','other');
