@@ -39,6 +39,7 @@ export const applications = mysqlTable("applications", {
   department: varchar("department", { length: 100 }).notNull(),
   nationalityType: mysqlEnum("nationalityType", ["local", "international"]).notNull(),
   nationality: varchar("nationality", { length: 100 }),
+  gender: mysqlEnum("gender", ["male", "female", "other"]),
   // 상담 주제 (JSON 배열로 저장)
   topics: text("topics").notNull(), // JSON string
   // 상담 내용
