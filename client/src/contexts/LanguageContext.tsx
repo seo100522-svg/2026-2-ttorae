@@ -98,7 +98,12 @@ const translations: Record<Language, Record<string, string>> = {
     "form.optional": "Optional",
     "form.confirmInfo": "Confirmation of Information",
     
-    "form.agreement.privacy": "I agree to the collection and use of personal information. The collected information will be used only for the operation of the Peers program and matching purposes, and will be protected according to relevant laws and regulations.",
+    "form.nationality.label": "Nationality",
+    "form.nationality.domestic": "Domestic Student",
+    "form.nationality.international": "International Student",
+    "form.nationality.input": "Country of Residence",
+    
+    "form.agreement.privacy": "I agree to the collection and use of personal information. The collected information will be used only for the operation of the Peers program and matching purposes, and will be protected according to relevant laws and regulations. I understand that peer counselors are not professional counselors but have received peer counseling training, and in crisis situations, I may be referred to the Student Counseling Center.",
     "form.agreement.confidentiality": "I understand that all conversations with peer counselors are confidential and will be kept private.",
     
     // Placeholders
@@ -112,6 +117,9 @@ const translations: Record<Language, Record<string, string>> = {
     "placeholder.agreedSchedule": "e.g., Monday 2:00 PM - 3:00 PM",
     "placeholder.day": "Select day",
     "placeholder.additionalMessage": "Share your thoughts or concerns...",
+    "placeholder.nationality": "e.g., China, Japan, USA",
+    
+    "error.nationalityRequired": "Please enter your country of residence",
     
     // Buttons
     "button.prev": "Previous",
@@ -226,7 +234,12 @@ const translations: Record<Language, Record<string, string>> = {
     "form.optional": "선택사항",
     "form.confirmInfo": "신청 정보 확인",
     
-    "form.agreement.privacy": "개인정보 수집 및 이용에 동의합니다. 수집된 정보는 또래소담 프로그램 운영 및 매칭 목적으로만 사용되며, 관련 법규에 따라 보호됩니다.",
+    "form.nationality.label": "국적",
+    "form.nationality.domestic": "내국인",
+    "form.nationality.international": "유학생",
+    "form.nationality.input": "거주 국가",
+    
+    "form.agreement.privacy": "개인정보 수집 및 이용에 동의합니다. 수집된 정보는 또래소담 프로그램 운영 및 매칭 목적으로만 사용되며, 관련 법규에 따라 보호됩니다. 또래상담자는 전문상담자가 아닌 또래상담교육을 받은 또래상담자이며, 위기상황에는 학생상담센터와 연계될 수 있음을 이해합니다.",
     "form.agreement.confidentiality": "또래상담자와의 모든 대화는 비밀로 유지되며 개인정보가 보호됨을 이해합니다.",
     
     // Placeholders
@@ -240,6 +253,9 @@ const translations: Record<Language, Record<string, string>> = {
     "placeholder.agreedSchedule": "예: 월요일 오후 2시 ~ 3시",
     "placeholder.day": "요일을 선택해주세요",
     "placeholder.additionalMessage": "고민이나 생각을 자유롭게 적어주세요...",
+    "placeholder.nationality": "예: 중국, 일본, 미국",
+    
+    "error.nationalityRequired": "거주 국가를 입력해주세요",
     
     // Buttons
     "button.prev": "이전",
@@ -354,7 +370,12 @@ const translations: Record<Language, Record<string, string>> = {
     "form.optional": "オプション",
     "form.confirmInfo": "申請情報の確認",
     
-    "form.agreement.privacy": "個人情報の収集と使用に同意します。収集された情報はピアプログラムの運営とマッチング目的でのみ使用され、関連法規に従って保護されます。",
+    "form.nationality.label": "国籍",
+    "form.nationality.domestic": "国内学生",
+    "form.nationality.international": "留学生",
+    "form.nationality.input": "居住国",
+    
+    "form.agreement.privacy": "個人情報の収集と使用に同意します。収集された情報はピアプログラムの運営とマッチング目的でのみ使用され、関連法規に従って保護されます。ピアカウンセラーは専門のカウンセラーではなく、ピアカウンセリング研修を受けたピアカウンセラーであり、危機的状況では学生相談センターと連携される可能性があることを理解します。",
     "form.agreement.confidentiality": "ピアカウンセラーとのすべての会話は機密扱いとなり、個人情報が保護されることを理解します。",
     
     // Placeholders
@@ -368,6 +389,9 @@ const translations: Record<Language, Record<string, string>> = {
     "placeholder.agreedSchedule": "例：月曜日 午後2時～3時",
     "placeholder.day": "曜日を選択してください",
     "placeholder.additionalMessage": "悩みや考えを自由に記入してください...",
+    "placeholder.nationality": "例：中国、日本、アメリカ",
+    
+    "error.nationalityRequired": "居住国を入力してください",
     
     // Buttons
     "button.prev": "前へ",

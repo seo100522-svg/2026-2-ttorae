@@ -19,6 +19,8 @@ interface FormData {
   department: string;
   gender: string;
   grade: string;
+  nationalityType: "local" | "international";
+  nationality: string;
   // Step 2: Application Type & Conditional
   applicationType: "pre_arranged" | "direct" | "";
   counselorName: string;
@@ -44,6 +46,8 @@ export default function ApplicationForm() {
     department: "",
     gender: "",
     grade: "",
+    nationalityType: "local",
+    nationality: "",
     applicationType: "",
     counselorName: "",
     agreedSchedule: "",
@@ -103,6 +107,10 @@ export default function ApplicationForm() {
         }
         if (!formData.grade) {
           toast.error(t("error.gradeRequired"));
+          return false;
+        }
+        if (formData.nationalityType === "international" && !formData.nationality.trim()) {
+          toast.error(t("error.nationalityRequired"));
           return false;
         }
         return true;
@@ -317,6 +325,37 @@ export default function ApplicationForm() {
                     </SelectContent>
                   </Select>
                 </div>
+
+                <div>
+                  <Label>{t("form.nationality.label")}</Label>
+                  <RadioGroup value={formData.nationalityType} onValueChange={(value) =>
+                    setFormData({
+                      ...formData,
+                      nationalityType: value as "local" | "international",
+                      nationality: value === "local" ? "" : formData.nationality,
+                    })
+                  }>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="local" id="local" />
+                      <Label htmlFor="local" className="font-normal cursor-pointer">{t("form.nationality.domestic")}</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="international" id="international" />
+                      <Label htmlFor="international" className="font-normal cursor-pointer">{t("form.nationality.international")}</Label>
+                    </div>
+                  </RadioGroup>
+                </div>
+
+                {formData.nationalityType === "international" && (
+                  <div>
+                    <Label>{t("form.nationality.input")}</Label>
+                    <Input
+                      placeholder={t("placeholder.nationality")}
+                      value={formData.nationality}
+                      onChange={(e) => setFormData({ ...formData, nationality: e.target.value })}
+                    />
+                  </div>
+                )}
               </div>
             )}
 
