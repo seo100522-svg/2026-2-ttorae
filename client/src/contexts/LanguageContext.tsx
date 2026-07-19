@@ -153,7 +153,10 @@ const translations: Record<Language, Record<string, string>> = {
     "error.confidentiality": "Please agree to the confidentiality policy.",
     "error.submission": "An error occurred during submission.",
     
-    "success.title": "Application Submitted!",
+    "notfound.title": "Page Not Found",
+    "notfound.desc": "Sorry, the page you are looking for doesn't exist.",
+    "notfound.subdesc": "It may have been moved or deleted.",
+        "success.title": "Application Submitted!",
     "success.referred": "Enjoy your counseling session with {name}.",
     "success.direct": "We will contact you based on your available times.",
     "success.desc": "We will contact you after reviewing your application.",
