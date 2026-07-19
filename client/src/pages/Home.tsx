@@ -68,8 +68,8 @@ export default function Home() {
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {
-                title: "재학생을 위한 1:1 상담",
-                description: "또래소담 프로그램의 또래친구와 일대일로 진행되는 상담입니다.",
+                title: "또래상담자와 1:1 매칭",
+                description: "또래소담 프로그램의 또래상담자와 1:1로 매칭되어 상담을 진행합니다.",
                 icon: "👥",
               },
               {
@@ -78,8 +78,8 @@ export default function Home() {
                 icon: "💬",
               },
               {
-                title: "비용 없이 참여 가능",
-                description: "재학생이면 누구나 무료로 참여할 수 있습니다.",
+                title: "비교과 중단 5점 부여",
+                description: "또래소담 프로그램 참여 시 비교과 중단 5점이 부여됩니다.",
                 icon: "🎯",
               },
             ].map((feature, index) => (
@@ -134,7 +134,7 @@ export default function Home() {
             지금 바로 신청하세요
           </h3>
           <p className="text-lg text-slate-600 mb-8">
-            신청 후 담당자가 연락하여 또래소담 프로그램의 또래친구를 매칭해드립니다.
+            신청 후 담당자가 연락하여 또래상담자와 매칭할 때 알려드립니다.
           </p>
           <Button
             onClick={() => navigate("/apply")}
