@@ -149,7 +149,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="bg-slate-900 text-slate-300 py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p>&copy; 2026 또래상담 Peers 프로그램. All rights reserved.</p>
+          <p>&copy; 2026 또래소담 프로그램. All rights reserved.</p>
         </div>
       </footer>
     </div>
