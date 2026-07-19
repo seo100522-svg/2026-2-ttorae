@@ -9,6 +9,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
+import { useLocation } from "wouter";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const COLLEGES = [
   "인문과학대학",
@@ -18,11 +20,17 @@ const COLLEGES = [
 ];
 
 const TOPICS = [
-  { value: "학업", label: "학업 및 성적 관리" },
-  { value: "진로", label: "진로 탐색 및 취업" },
-  { value: "대인관계", label: "동기/선후배 대인관계" },
-  { value: "적응", label: "대학생활 전반 적응" },
-  { value: "정서", label: "우울, 불안, 스트레스" },
+  { value: "인간관계", label: "인간관계" },
+  { value: "연애", label: "연애" },
+  { value: "가족", label: "가족" },
+  { value: "학업", label: "학업" },
+  { value: "진로", label: "진로" },
+  { value: "대학생활 적응", label: "대학생활 적응" },
+  { value: "스트레스", label: "스트레스" },
+  { value: "외로움", label: "외로움" },
+  { value: "자신감", label: "자신감" },
+  { value: "기타", label: "기타" },
+  { value: "아직 잘 모르겠음", label: "아직 잘 모르겠음" },
 ];
 
 const SCALE_QUESTIONS = [
@@ -33,8 +41,20 @@ const SCALE_QUESTIONS = [
   "전반적으로 대학생활에 만족하고 있다.",
 ];
 
+const WEEKDAYS = ["월", "화", "수", "목", "금"];
+const HOURS = Array.from({ length: 10 }, (_, i) => {
+  const hour = 9 + i;
+  return { value: hour.toString(), label: `${hour}:00` };
+});
+
+interface AvailableTime {
+  day: string;
+  startHour: string;
+  endHour: string;
+}
+
 interface FormData {
-  // Step 1
+  // Step 1: Basic Info
   studentName: string;
   studentId: string;
   phoneNumber: string;
@@ -42,10 +62,17 @@ interface FormData {
   department: string;
   nationalityType: "local" | "international";
   nationality: string;
-  // Step 2
-  topics: string[];
+  
+  // Step 2: Application Type
+  applicationType: "referred" | "direct" | "";
+  referredCounselorName: string;
+  availableTimes: AvailableTime[];
+  
+  // Step 3: Topics & Additional Info
+  topics: string;
   storyDetails: string;
-  // Step 3
+  
+  // Step 4: Scale Assessment
   scaleResponses: {
     q1: number;
     q2: number;
@@ -53,11 +80,14 @@ interface FormData {
     q4: number;
     q5: number;
   };
-  // Step 4
+  
+  // Agreements
   agreePrivacy: boolean;
+  agreeTerms: boolean;
 }
 
 export default function ApplicationForm() {
+  const [, navigate] = useLocation();
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState<FormData>({
     studentName: "",
@@ -67,10 +97,14 @@ export default function ApplicationForm() {
     department: "",
     nationalityType: "local",
     nationality: "",
-    topics: [],
+    applicationType: "",
+    referredCounselorName: "",
+    availableTimes: [{ day: "월", startHour: "09", endHour: "10" }],
+    topics: "",
     storyDetails: "",
     scaleResponses: { q1: 0, q2: 0, q3: 0, q4: 0, q5: 0 },
     agreePrivacy: false,
+    agreeTerms: false,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
@@ -89,7 +123,7 @@ export default function ApplicationForm() {
           return false;
         }
         if (!formData.phoneNumber.trim()) {
-          toast.error("전화번호를 입력해주세요.");
+          toast.error("휴대전화 번호를 입력해주세요.");
           return false;
         }
         if (!formData.college) {
@@ -105,30 +139,42 @@ export default function ApplicationForm() {
           return false;
         }
         return true;
+
       case 2:
-        if (formData.topics.length === 0) {
-          toast.error("상담 주제를 최소 하나 선택해주세요.");
+        if (!formData.applicationType) {
+          toast.error("신청 유형을 선택해주세요.");
+          return false;
+        }
+        if (formData.applicationType === "referred" && !formData.referredCounselorName.trim()) {
+          toast.error("진행할 또래상담자 이름을 입력해주세요.");
+          return false;
+        }
+        if (formData.applicationType === "direct" && formData.availableTimes.length === 0) {
+          toast.error("최소 한 개 이상의 상담 가능 시간을 입력해주세요.");
           return false;
         }
         return true;
+
       case 3:
-        if (
-          formData.scaleResponses.q1 === 0 ||
-          formData.scaleResponses.q2 === 0 ||
-          formData.scaleResponses.q3 === 0 ||
-          formData.scaleResponses.q4 === 0 ||
-          formData.scaleResponses.q5 === 0
-        ) {
-          toast.error("모든 문항에 답변해주세요.");
-          return false;
-        }
         return true;
+
       case 4:
+        if (formData.scaleResponses.q1 === 0 || formData.scaleResponses.q2 === 0 || 
+            formData.scaleResponses.q3 === 0 || formData.scaleResponses.q4 === 0 || 
+            formData.scaleResponses.q5 === 0) {
+          toast.error("모든 척도 항목에 답변해주세요.");
+          return false;
+        }
         if (!formData.agreePrivacy) {
-          toast.error("개인정보 수집 및 이용에 동의해주세요.");
+          toast.error("개인정보 수집·이용 동의를 확인해주세요.");
+          return false;
+        }
+        if (!formData.agreeTerms) {
+          toast.error("또래상담 운영 및 비밀보장 예외 안내를 확인해주세요.");
           return false;
         }
         return true;
+
       default:
         return true;
     }
@@ -137,13 +183,33 @@ export default function ApplicationForm() {
   const handleNext = () => {
     if (validateStep(currentStep)) {
       setCurrentStep(currentStep + 1);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
   const handlePrev = () => {
-    if (currentStep > 1) {
-      setCurrentStep(currentStep - 1);
-    }
+    setCurrentStep(currentStep - 1);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleAddTime = () => {
+    setFormData({
+      ...formData,
+      availableTimes: [...formData.availableTimes, { day: "월", startHour: "09", endHour: "10" }],
+    });
+  };
+
+  const handleRemoveTime = (index: number) => {
+    setFormData({
+      ...formData,
+      availableTimes: formData.availableTimes.filter((_, i) => i !== index),
+    });
+  };
+
+  const handleUpdateTime = (index: number, field: keyof AvailableTime, value: string) => {
+    const newTimes = [...formData.availableTimes];
+    newTimes[index] = { ...newTimes[index], [field]: value };
+    setFormData({ ...formData, availableTimes: newTimes });
   };
 
   const handleSubmit = async () => {
@@ -151,6 +217,12 @@ export default function ApplicationForm() {
 
     setIsSubmitting(true);
     try {
+      const availableTimesStr = formData.applicationType === "direct"
+        ? formData.availableTimes
+            .map((t) => `${t.day}요일 ${t.startHour}:00~${t.endHour}:00`)
+            .join("\n")
+        : "";
+
       await createApplicationMutation.mutateAsync({
         studentName: formData.studentName,
         studentId: formData.studentId,
@@ -158,11 +230,12 @@ export default function ApplicationForm() {
         college: formData.college,
         department: formData.department,
         nationalityType: formData.nationalityType,
-        nationality: formData.nationality || undefined,
-        topics: JSON.stringify(formData.topics),
-        storyDetails: formData.storyDetails,
+        nationality: formData.nationality,
+        topics: formData.topics,
+        storyDetails: `[신청 유형: ${formData.applicationType === "referred" ? "미리 섭외받고 신청" : "직접 신청"}]\n${formData.applicationType === "referred" ? `상담자: ${formData.referredCounselorName}` : `상담 가능 시간:\n${availableTimesStr}`}\n\n${formData.storyDetails}`,
         scaleResponses: formData.scaleResponses,
       });
+
       setSubmitSuccess(true);
       toast.success("신청이 완료되었습니다!");
     } catch (error) {
@@ -175,128 +248,152 @@ export default function ApplicationForm() {
 
   if (submitSuccess) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 p-4">
-        <Card className="w-full max-w-md border-0 shadow-lg">
-          <CardHeader className="text-center pb-8">
-            <div className="mb-4 text-5xl">🎉</div>
-            <CardTitle className="text-2xl">신청 완료</CardTitle>
-            <CardDescription className="mt-2">
-              또래동반자 상담 신청이 정상적으로 접수되었습니다.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 text-sm text-blue-800">
-              <p className="font-semibold mb-2">📞 다음 단계</p>
-              <p>
-                매칭이 완료되면 남겨주신 연락처로 안내해 드릴 예정입니다. 잠시만 기다려주세요.
-              </p>
-            </div>
-            <Button
-              onClick={() => window.location.href = "/"}
-              className="w-full bg-slate-700 hover:bg-slate-800"
-            >
-              홈으로 돌아가기
-            </Button>
-          </CardContent>
-        </Card>
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 py-12">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Card className="border-0 shadow-lg">
+            <CardHeader className="text-center">
+              <div className="text-5xl mb-4">✓</div>
+              <CardTitle className="text-3xl">또래친구 신청이 완료되었어요.</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <p className="text-slate-700">
+                  작성해 주신 내용을 담당자가 확인한 후 입력하신 연락처로 안내드릴 예정입니다.
+                </p>
+              </div>
+
+              {formData.applicationType === "referred" && (
+                <div className="bg-slate-50 border border-slate-200 rounded-lg p-4">
+                  <p className="text-slate-700">
+                    작성하신 또래상담자 정보를 확인한 후 상담 진행과 관련된 안내를 드릴 예정입니다.
+                  </p>
+                </div>
+              )}
+
+              {formData.applicationType === "direct" && (
+                <div className="bg-slate-50 border border-slate-200 rounded-lg p-4">
+                  <p className="text-slate-700">
+                    작성하신 상담 가능 시간을 바탕으로 또래상담자를 매칭한 후 연락드릴 예정입니다.
+                  </p>
+                </div>
+              )}
+
+              <div className="space-y-2 text-sm text-slate-600">
+                <p>• 담당자 연락처: 학생상담센터</p>
+                <p>• 긴급상황: 112, 119, 자살예방상담전화 109</p>
+              </div>
+
+              <Button
+                onClick={() => navigate("/")}
+                className="w-full bg-slate-700 hover:bg-slate-800"
+              >
+                홈으로 돌아가기
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 py-8 px-4">
-      <div className="max-w-2xl mx-auto">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 py-12">
+      <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-slate-900 mb-2">또래동반자 상담 신청</h1>
-          <p className="text-slate-600">
-            비슷한 고민을 품고 걷는 캠퍼스 친구, 또래소담자가 늘 네 곁에 있어.
-          </p>
+        <div className="mb-8">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => navigate("/")}
+            className="text-slate-600 hover:text-slate-900 mb-4"
+          >
+            <ChevronLeft className="w-4 h-4 mr-1" />
+            돌아가기
+          </Button>
+          <h1 className="text-3xl font-bold text-slate-900">또래친구 신청</h1>
         </div>
 
-        {/* Step Indicator */}
-        <div className="mb-8">
-          <div className="flex justify-between items-center">
-            {[1, 2, 3, 4].map((step) => (
-              <div key={step} className="flex flex-col items-center flex-1">
-                <div
-                  className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold transition-all ${
-                    step <= currentStep
-                      ? "bg-slate-700 text-white"
-                      : "bg-slate-200 text-slate-600"
-                  }`}
-                >
-                  {step}
-                </div>
-                {step < 4 && (
-                  <div
-                    className={`flex-1 h-1 mx-2 mt-2 transition-all ${
-                      step < currentStep ? "bg-slate-700" : "bg-slate-200"
-                    }`}
-                  />
-                )}
+        {/* Progress Indicator */}
+        <div className="flex items-center justify-between mb-8">
+          {[1, 2, 3, 4].map((step) => (
+            <div key={step} className="flex items-center flex-1">
+              <div
+                className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm ${
+                  currentStep >= step
+                    ? "bg-slate-700 text-white"
+                    : "bg-slate-200 text-slate-600"
+                }`}
+              >
+                {step}
               </div>
-            ))}
-          </div>
+              {step < 4 && (
+                <div
+                  className={`flex-1 h-1 mx-2 ${
+                    currentStep > step ? "bg-slate-700" : "bg-slate-200"
+                  }`}
+                />
+              )}
+            </div>
+          ))}
         </div>
 
         {/* Form Card */}
         <Card className="border-0 shadow-lg">
           <CardHeader>
             <CardTitle>
-              {currentStep === 1 && "01. 나를 알려주세요"}
-              {currentStep === 2 && "02. 어떤 이야기를 나누고 싶나요?"}
-              {currentStep === 3 && "03. 마음 날씨 체크"}
-              {currentStep === 4 && "04. 최종 확인"}
+              {currentStep === 1 && "기본 정보 입력"}
+              {currentStep === 2 && "신청 유형 선택"}
+              {currentStep === 3 && "고민 영역 및 추가 정보"}
+              {currentStep === 4 && "대학생활 적응 척도 검사"}
             </CardTitle>
+            <CardDescription>
+              {currentStep === 1 && "또래친구 신청에 필요한 기본 정보를 입력해주세요."}
+              {currentStep === 2 && "신청 유형을 선택하고 추가 정보를 입력해주세요."}
+              {currentStep === 3 && "나누고 싶은 고민 영역을 선택하고 추가 내용을 작성해주세요."}
+              {currentStep === 4 && "5점 리커트 척도로 대학생활 적응도를 평가해주세요."}
+            </CardDescription>
           </CardHeader>
+
           <CardContent className="space-y-6">
             {/* Step 1: Basic Information */}
             {currentStep === 1 && (
               <div className="space-y-4">
                 <div>
-                  <Label htmlFor="studentName">이름</Label>
+                  <Label htmlFor="name">이름 *</Label>
                   <Input
-                    id="studentName"
-                    placeholder="이름을 입력해주세요"
+                    id="name"
                     value={formData.studentName}
-                    onChange={(e) =>
-                      setFormData({ ...formData, studentName: e.target.value })
-                    }
+                    onChange={(e) => setFormData({ ...formData, studentName: e.target.value })}
+                    placeholder="예: 김○○"
                   />
                 </div>
 
-                <div>
-                  <Label htmlFor="studentId">학번</Label>
-                  <Input
-                    id="studentId"
-                    placeholder="예: 202612345"
-                    value={formData.studentId}
-                    onChange={(e) =>
-                      setFormData({ ...formData, studentId: e.target.value })
-                    }
-                  />
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="studentId">학번 *</Label>
+                    <Input
+                      id="studentId"
+                      value={formData.studentId}
+                      onChange={(e) => setFormData({ ...formData, studentId: e.target.value })}
+                      placeholder="예: 2026130"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="phone">휴대전화 번호 *</Label>
+                    <Input
+                      id="phone"
+                      value={formData.phoneNumber}
+                      onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
+                      placeholder="예: 010-1234-5678"
+                    />
+                  </div>
                 </div>
 
                 <div>
-                  <Label htmlFor="phoneNumber">전화번호</Label>
-                  <Input
-                    id="phoneNumber"
-                    placeholder="예: 010-1234-5678"
-                    value={formData.phoneNumber}
-                    onChange={(e) =>
-                      setFormData({ ...formData, phoneNumber: e.target.value })
-                    }
-                  />
-                </div>
-
-                <div>
-                  <Label htmlFor="college">단과대학</Label>
-                  <Select value={formData.college} onValueChange={(value) =>
-                    setFormData({ ...formData, college: value })
-                  }>
+                  <Label htmlFor="college">단과대학 *</Label>
+                  <Select value={formData.college} onValueChange={(value) => setFormData({ ...formData, college: value })}>
                     <SelectTrigger id="college">
-                      <SelectValue placeholder="단과대학을 선택해주세요" />
+                      <SelectValue placeholder="선택" />
                     </SelectTrigger>
                     <SelectContent>
                       {COLLEGES.map((college) => (
@@ -309,68 +406,185 @@ export default function ApplicationForm() {
                 </div>
 
                 <div>
-                  <Label htmlFor="department">학과</Label>
+                  <Label htmlFor="department">학과 *</Label>
                   <Input
                     id="department"
-                    placeholder="학과명을 정확히 입력해주세요"
                     value={formData.department}
-                    onChange={(e) =>
-                      setFormData({ ...formData, department: e.target.value })
-                    }
+                    onChange={(e) => setFormData({ ...formData, department: e.target.value })}
+                    placeholder="예: 사회학과"
                   />
                 </div>
 
                 <div>
-                  <Label>국적 구분</Label>
-                  <RadioGroup
-                    value={formData.nationalityType}
-                    onValueChange={(value) =>
-                      setFormData({
-                        ...formData,
-                        nationalityType: value as "local" | "international",
-                        nationality: value === "local" ? "" : formData.nationality,
-                      })
-                    }
-                  >
+                  <Label className="text-base font-semibold mb-3 block">국적 *</Label>
+                  <RadioGroup value={formData.nationalityType} onValueChange={(value: any) => setFormData({ ...formData, nationalityType: value })}>
                     <div className="flex items-center space-x-2">
                       <RadioGroupItem value="local" id="local" />
-                      <Label htmlFor="local" className="font-normal cursor-pointer">
-                        대한민국
-                      </Label>
+                      <Label htmlFor="local" className="cursor-pointer">내국인</Label>
                     </div>
                     <div className="flex items-center space-x-2">
                       <RadioGroupItem value="international" id="international" />
-                      <Label htmlFor="international" className="font-normal cursor-pointer">
-                        외국인 유학생
-                      </Label>
+                      <Label htmlFor="international" className="cursor-pointer">외국인 유학생</Label>
                     </div>
                   </RadioGroup>
                 </div>
 
                 {formData.nationalityType === "international" && (
                   <div>
-                    <Label htmlFor="nationality">국적 입력</Label>
+                    <Label htmlFor="nationality">국적 입력 *</Label>
                     <Input
                       id="nationality"
-                      placeholder="예: 베트남, 중국 등"
                       value={formData.nationality}
-                      onChange={(e) =>
-                        setFormData({ ...formData, nationality: e.target.value })
-                      }
+                      onChange={(e) => setFormData({ ...formData, nationality: e.target.value })}
+                      placeholder="예: 베트남"
                     />
                   </div>
                 )}
               </div>
             )}
 
-            {/* Step 2: Topics */}
+            {/* Step 2: Application Type */}
             {currentStep === 2 && (
-              <div className="space-y-4">
+              <div className="space-y-6">
                 <div>
-                  <Label className="mb-3 block">
-                    대학생활 중 가장 고민되는 주제는 무엇인가요? (복수 선택 가능)
-                  </Label>
-                  <div className="space-y-2">
+                  <Label className="text-base font-semibold mb-4 block">어떤 방식으로 또래상담을 신청하시나요? *</Label>
+                  <RadioGroup value={formData.applicationType} onValueChange={(value: any) => setFormData({ ...formData, applicationType: value })}>
+                    <div className="space-y-3">
+                      <div className="flex items-start space-x-3 p-4 border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-50">
+                        <RadioGroupItem value="referred" id="referred" className="mt-1" />
+                        <div className="flex-1">
+                          <Label htmlFor="referred" className="font-semibold cursor-pointer">
+                            미리 섭외받고 신청
+                          </Label>
+                          <p className="text-sm text-slate-600 mt-1">
+                            이미 상담을 진행하기로 한 또래상담자가 있는 경우 선택해 주세요.
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-start space-x-3 p-4 border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-50">
+                        <RadioGroupItem value="direct" id="direct" className="mt-1" />
+                        <div className="flex-1">
+                          <Label htmlFor="direct" className="font-semibold cursor-pointer">
+                            직접 신청
+                          </Label>
+                          <p className="text-sm text-slate-600 mt-1">
+                            아직 정해진 또래상담자가 없으며, 상담 가능한 시간에 맞춰 매칭을 원하는 경우 선택해 주세요.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </RadioGroup>
+                </div>
+
+                {/* Referred Counselor Name */}
+                {formData.applicationType === "referred" && (
+                  <div>
+                    <Label htmlFor="counselorName">진행할 또래상담자 이름 *</Label>
+                    <p className="text-sm text-slate-600 mb-2">
+                      미리 상담을 진행하기로 한 또래상담자의 이름을 작성해 주세요.
+                    </p>
+                    <Input
+                      id="counselorName"
+                      value={formData.referredCounselorName}
+                      onChange={(e) => setFormData({ ...formData, referredCounselorName: e.target.value })}
+                      placeholder="예: 김○○"
+                    />
+                  </div>
+                )}
+
+                {/* Available Times */}
+                {formData.applicationType === "direct" && (
+                  <div>
+                    <Label className="text-base font-semibold mb-2 block">상담 가능한 시간을 작성해 주세요. *</Label>
+                    <p className="text-sm text-slate-600 mb-4">
+                      월요일부터 금요일, 오전 9시부터 오후 6시 사이에서 가능한 요일과 시간을 작성해 주세요. 가능한 시간을 여러 개 작성하면 매칭이 더 원활합니다.
+                    </p>
+
+                    <div className="space-y-3">
+                      {formData.availableTimes.map((time, index) => (
+                        <div key={index} className="flex items-end gap-2">
+                          <div className="flex-1">
+                            <Label className="text-xs text-slate-600">요일</Label>
+                            <Select value={time.day} onValueChange={(value) => handleUpdateTime(index, "day", value)}>
+                              <SelectTrigger>
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent>
+                                {WEEKDAYS.map((day) => (
+                                  <SelectItem key={day} value={day}>
+                                    {day}요일
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                          </div>
+
+                          <div className="flex-1">
+                            <Label className="text-xs text-slate-600">시작 시간</Label>
+                            <Select value={time.startHour} onValueChange={(value) => handleUpdateTime(index, "startHour", value)}>
+                              <SelectTrigger>
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent>
+                                {HOURS.map((hour) => (
+                                  <SelectItem key={hour.value} value={hour.value}>
+                                    {hour.label}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                          </div>
+
+                          <div className="flex-1">
+                            <Label className="text-xs text-slate-600">종료 시간</Label>
+                            <Select value={time.endHour} onValueChange={(value) => handleUpdateTime(index, "endHour", value)}>
+                              <SelectTrigger>
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent>
+                                {HOURS.map((hour) => (
+                                  <SelectItem key={hour.value} value={hour.value}>
+                                    {hour.label}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                          </div>
+
+                          {formData.availableTimes.length > 1 && (
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => handleRemoveTime(index)}
+                              className="text-red-600 hover:text-red-700"
+                            >
+                              삭제
+                            </Button>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={handleAddTime}
+                      className="mt-3"
+                    >
+                      + 다른 가능 시간 추가하기
+                    </Button>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Step 3: Topics & Additional Info */}
+            {currentStep === 3 && (
+              <div className="space-y-6">
+                <div>
+                  <Label className="text-base font-semibold mb-3 block">어떤 이야기를 나누고 싶나요?</Label>
+                  <div className="grid grid-cols-2 gap-3">
                     {TOPICS.map((topic) => (
                       <div key={topic.value} className="flex items-center space-x-2">
                         <Checkbox
@@ -378,19 +592,18 @@ export default function ApplicationForm() {
                           checked={formData.topics.includes(topic.value)}
                           onCheckedChange={(checked) => {
                             if (checked) {
-                              setFormData({
-                                ...formData,
-                                topics: [...formData.topics, topic.value],
-                              });
+                              const newTopics = formData.topics ? `${formData.topics}, ${topic.value}` : topic.value;
+                              setFormData({ ...formData, topics: newTopics });
                             } else {
-                              setFormData({
-                                ...formData,
-                                topics: formData.topics.filter((t) => t !== topic.value),
-                              });
+                              const newTopics = formData.topics
+                                .split(", ")
+                                .filter((t) => t !== topic.value)
+                                .join(", ");
+                              setFormData({ ...formData, topics: newTopics });
                             }
                           }}
                         />
-                        <Label htmlFor={topic.value} className="font-normal cursor-pointer">
+                        <Label htmlFor={topic.value} className="cursor-pointer">
                           {topic.label}
                         </Label>
                       </div>
@@ -399,149 +612,126 @@ export default function ApplicationForm() {
                 </div>
 
                 <div>
-                  <Label htmlFor="storyDetails">
-                    또래소담자와 특별히 나누고 싶은 구체적인 이야기 (주관식)
-                  </Label>
+                  <Label htmlFor="additionalMessage">또래상담자에게 미리 전하고 싶은 내용</Label>
+                  <p className="text-sm text-slate-600 mb-2">
+                    자세한 사연을 모두 작성하지 않아도 됩니다. 상담자가 미리 알면 좋을 내용만 편하게 작성해 주세요.
+                  </p>
                   <Textarea
-                    id="storyDetails"
-                    placeholder="마음에 품고 있는 고민을 편안하게 한두 줄로 풀어놓아 주세요."
-                    rows={5}
+                    id="additionalMessage"
                     value={formData.storyDetails}
-                    onChange={(e) =>
-                      setFormData({ ...formData, storyDetails: e.target.value })
-                    }
+                    onChange={(e) => setFormData({ ...formData, storyDetails: e.target.value })}
+                    placeholder="선택사항입니다."
+                    rows={4}
                   />
                 </div>
               </div>
             )}
 
-            {/* Step 3: Scale Assessment */}
-            {currentStep === 3 && (
-              <div className="space-y-4">
-                <p className="text-sm text-slate-600 mb-4">
-                  각 문항을 읽고 현재 본인의 상태와 가장 가까운 보기를 선택해주세요.
-                </p>
+            {/* Step 4: Scale Assessment */}
+            {currentStep === 4 && (
+              <div className="space-y-6">
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+                  <p className="text-sm text-slate-700">
+                    다음 문항들을 읽고 자신의 생각과 가장 가깝다고 생각하는 번호를 선택해주세요.
+                  </p>
+                </div>
+
                 {SCALE_QUESTIONS.map((question, index) => {
                   const qKey = `q${index + 1}` as keyof typeof formData.scaleResponses;
                   return (
-                    <div
-                      key={index}
-                      className="bg-slate-50 p-4 rounded-lg border border-slate-200"
-                    >
-                      <p className="font-medium text-slate-900 mb-3">
+                    <div key={index} className="space-y-3 pb-6 border-b last:border-b-0">
+                      <Label className="font-semibold text-slate-900">
                         {index + 1}. {question}
-                      </p>
-                      <div className="grid grid-cols-5 gap-2">
-                        {[1, 2, 3, 4, 5].map((value) => (
-                          <button
-                            key={value}
-                            onClick={() =>
-                              setFormData({
-                                ...formData,
-                                scaleResponses: {
-                                  ...formData.scaleResponses,
-                                  [qKey]: value,
-                                },
-                              })
-                            }
-                            className={`py-2 px-1 text-xs font-medium rounded transition-all ${
-                              formData.scaleResponses[qKey] === value
-                                ? "bg-slate-700 text-white"
-                                : "bg-white border border-slate-300 text-slate-600 hover:border-slate-400"
-                            }`}
-                          >
-                            {value === 1 && "전혀\n아니다"}
-                            {value === 2 && "아니다"}
-                            {value === 3 && "보통"}
-                            {value === 4 && "그렇다"}
-                            {value === 5 && "매우\n그렇다"}
-                          </button>
-                        ))}
+                      </Label>
+                      <RadioGroup
+                        value={formData.scaleResponses[qKey].toString()}
+                        onValueChange={(value) =>
+                          setFormData({
+                            ...formData,
+                            scaleResponses: {
+                              ...formData.scaleResponses,
+                              [qKey]: parseInt(value),
+                            },
+                          })
+                        }
+                      >
+                        <div className="flex gap-4">
+                          {[1, 2, 3, 4, 5].map((score) => (
+                            <div key={score} className="flex items-center space-x-2">
+                              <RadioGroupItem value={score.toString()} id={`q${index + 1}_${score}`} />
+                              <Label htmlFor={`q${index + 1}_${score}`} className="cursor-pointer">
+                                {score}
+                              </Label>
+                            </div>
+                          ))}
+                        </div>
+                      </RadioGroup>
+                      <div className="flex justify-between text-xs text-slate-500 mt-2">
+                        <span>전혀 그렇지 않다</span>
+                        <span>매우 그렇다</span>
                       </div>
                     </div>
                   );
                 })}
-              </div>
-            )}
 
-            {/* Step 4: Privacy Agreement */}
-            {currentStep === 4 && (
-              <div className="space-y-4">
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                  <h3 className="font-semibold text-blue-900 mb-2">신청 정보 확인</h3>
-                  <div className="text-sm text-blue-800 space-y-1">
-                    <p>
-                      <strong>이름:</strong> {formData.studentName}
-                    </p>
-                    <p>
-                      <strong>학번:</strong> {formData.studentId}
-                    </p>
-                    <p>
-                      <strong>연락처:</strong> {formData.phoneNumber}
-                    </p>
-                    <p>
-                      <strong>단과대학:</strong> {formData.college}
-                    </p>
-                    <p>
-                      <strong>학과:</strong> {formData.department}
-                    </p>
-                    <p>
-                      <strong>국적:</strong>{" "}
-                      {formData.nationalityType === "local"
-                        ? "대한민국"
-                        : `외국인 (${formData.nationality})`}
-                    </p>
-                    <p>
-                      <strong>상담 주제:</strong> {formData.topics.join(", ")}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="bg-slate-50 border border-slate-200 rounded-lg p-4">
-                  <div className="flex items-start space-x-3">
+                <div className="space-y-3 border-t pt-6">
+                  <div className="flex items-start space-x-2">
                     <Checkbox
                       id="privacy"
                       checked={formData.agreePrivacy}
-                      onCheckedChange={(checked) =>
-                        setFormData({ ...formData, agreePrivacy: checked as boolean })
-                      }
+                      onCheckedChange={(checked) => setFormData({ ...formData, agreePrivacy: checked as boolean })}
                     />
-                    <Label htmlFor="privacy" className="font-normal cursor-pointer text-sm">
-                      개인정보 수집 및 이용에 동의합니다. 수집된 정보는 또래소담 프로그램 운영 및 매칭 목적으로만 사용되며, 관련 법규에 따라 보호됩니다.
+                    <Label htmlFor="privacy" className="cursor-pointer">
+                      <span className="font-semibold">[필수]</span> 개인정보 수집·이용 동의
+                    </Label>
+                  </div>
+
+                  <div className="flex items-start space-x-2">
+                    <Checkbox
+                      id="terms"
+                      checked={formData.agreeTerms}
+                      onCheckedChange={(checked) => setFormData({ ...formData, agreeTerms: checked as boolean })}
+                    />
+                    <Label htmlFor="terms" className="cursor-pointer">
+                      <span className="font-semibold">[필수]</span> 또래상담 운영 및 비밀보장 예외 안내 확인
                     </Label>
                   </div>
                 </div>
               </div>
             )}
+          </CardContent>
 
-            {/* Navigation Buttons */}
-            <div className="flex gap-3 pt-6 border-t">
+          {/* Navigation Buttons */}
+          <div className="flex gap-3 p-6 border-t">
+            {currentStep > 1 && (
               <Button
                 variant="outline"
                 onClick={handlePrev}
-                disabled={currentStep === 1}
                 className="flex-1"
               >
+                <ChevronLeft className="w-4 h-4 mr-2" />
                 이전
               </Button>
-              {currentStep < 4 ? (
-                <Button
-                  onClick={handleNext}
-                  className="flex-1 bg-slate-700 hover:bg-slate-800"
-                >
-                  다음
-                </Button>
-              ) : (
-                <Button
-                  onClick={handleSubmit}
-                  disabled={isSubmitting}
-                  className="flex-1 bg-slate-700 hover:bg-slate-800"
-                >
-                  {isSubmitting ? "제출 중..." : "상담 신청 완료하기"}
-                </Button>
-              )}
-            </div>
-          </CardContent>
+            )}
+
+            {currentStep < 4 ? (
+              <Button
+                onClick={handleNext}
+                className={`flex-1 bg-slate-700 hover:bg-slate-800 ${currentStep === 1 ? "w-full" : ""}`}
+              >
+                다음
+                <ChevronRight className="w-4 h-4 ml-2" />
+              </Button>
+            ) : (
+              <Button
+                onClick={handleSubmit}
+                disabled={isSubmitting}
+                className="flex-1 bg-slate-700 hover:bg-slate-800"
+              >
+                {isSubmitting ? "제출 중..." : "신청 완료"}
+              </Button>
+            )}
+          </div>
         </Card>
       </div>
     </div>

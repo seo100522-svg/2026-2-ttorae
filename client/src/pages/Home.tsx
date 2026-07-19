@@ -10,7 +10,7 @@ export default function Home() {
       {/* Navigation */}
       <nav className="bg-white/80 backdrop-blur-sm border-b border-slate-200 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <h1 className="text-xl font-bold text-slate-900">또래소담</h1>
+          <h1 className="text-xl font-bold text-slate-900">또래상담 Peers</h1>
           <Button
             onClick={() => navigate("/apply")}
             className="bg-slate-700 hover:bg-slate-800"
@@ -25,11 +25,14 @@ export default function Home() {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
             <div>
-              <h2 className="text-4xl md:text-5xl font-bold text-slate-900 leading-tight mb-4">
-                비슷한 고민을 품고 걷는 캠퍼스 친구
+              <h2 className="text-4xl md:text-5xl font-bold text-slate-900 leading-tight mb-2">
+                대학생활의 든든한 동반자,<br />또래상담자 Peers
               </h2>
-              <p className="text-xl text-slate-600">
-                또래소담자가 늘 네 곁에 있어. 대학생활의 고민을 함께 나누고 싶다면 지금 신청해보세요.
+              <p className="text-lg text-slate-600 mb-4">
+                학교생활, 인간관계, 진로 등 대학생활의 고민을 또래상담자와 편안하게 나누어 보세요.
+              </p>
+              <p className="text-sm text-slate-500 mb-6">
+                이 페이지는 또래상담에 참여할 '또래친구' 신청 페이지입니다.
               </p>
             </div>
             <Button
@@ -38,8 +41,8 @@ export default function Home() {
               className="bg-slate-700 hover:bg-slate-800 text-white px-8 py-6 text-lg"
             >
               또래친구 신청하기
-            </Button>
-          </div>
+              </Button>
+            </div>
 
           {/* Decorative Element */}
           <div className="relative">
@@ -59,24 +62,24 @@ export default function Home() {
       <section className="bg-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h3 className="text-3xl font-bold text-slate-900 text-center mb-12">
-            또래소담은 어떤 프로그램인가요?
+            또래상담 Peers는 어떤 프로그램인가요?
           </h3>
 
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {
-                title: "또래 매칭",
-                description: "비슷한 고민을 가진 학생들을 매칭해 자연스러운 관계를 형성합니다.",
+                title: "재학생을 위한 1:1 상담",
+                description: "교육을 받은 또래상담자와 일대일로 진행되는 상담입니다.",
                 icon: "👥",
               },
               {
-                title: "편안한 상담",
-                description: "전문가가 아닌 또래 친구와의 대화로 더 편하고 자유로운 소통이 가능합니다.",
+                title: "학교생활과 일상의 고민",
+                description: "학업, 인간관계, 진로 등 일상적인 고민을 나눕니다.",
                 icon: "💬",
               },
               {
-                title: "맞춤형 지원",
-                description: "학업, 진로, 대인관계 등 다양한 주제의 고민을 함께 나눕니다.",
+                title: "비용 없이 참여 가능",
+                description: "재학생이면 누구나 무료로 참여할 수 있습니다.",
                 icon: "🎯",
               },
             ].map((feature, index) => (
@@ -101,12 +104,11 @@ export default function Home() {
             신청 절차
           </h3>
 
-          <div className="grid md:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-3 gap-6">
             {[
-              { step: 1, title: "기본 정보 입력", desc: "이름, 학번, 연락처 등을 입력합니다." },
-              { step: 2, title: "상담 주제 선택", desc: "고민하는 주제를 선택합니다." },
-              { step: 3, title: "척도 검사", desc: "대학생활 적응도를 평가합니다." },
-              { step: 4, title: "신청 완료", desc: "개인정보 동의 후 신청을 완료합니다." },
+              { step: 1, title: "기본 정보 입력", desc: "이름, 학번, 학과, 연락처를 입력합니다." },
+              { step: 2, title: "신청 유형 선택", desc: "미리 정해진 상담자가 있는지 선택합니다." },
+              { step: 3, title: "신청 완료", desc: "동의 후 신청을 완료합니다." },
             ].map((item) => (
               <div key={item.step} className="relative">
                 <div className="bg-white rounded-lg p-6 border border-slate-200 shadow-sm">
@@ -116,7 +118,7 @@ export default function Home() {
                   <h4 className="font-semibold text-slate-900 mb-2">{item.title}</h4>
                   <p className="text-sm text-slate-600">{item.desc}</p>
                 </div>
-                {item.step < 4 && (
+                {item.step < 3 && (
                   <div className="hidden md:block absolute top-1/2 -right-3 w-6 h-0.5 bg-slate-300 transform -translate-y-1/2" />
                 )}
               </div>
@@ -132,7 +134,7 @@ export default function Home() {
             지금 바로 신청하세요
           </h3>
           <p className="text-lg text-slate-600 mb-8">
-            또래소담자와의 만남이 당신의 대학생활을 더욱 풍요롭게 만들어줄 것입니다.
+            신청 후 담당자가 연락하여 또래상담자를 매칭해드립니다.
           </p>
           <Button
             onClick={() => navigate("/apply")}
@@ -147,7 +149,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="bg-slate-900 text-slate-300 py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p>&copy; 2026 또래소담 프로그램. All rights reserved.</p>
+          <p>&copy; 2026 또래상담 Peers 프로그램. All rights reserved.</p>
         </div>
       </footer>
     </div>
