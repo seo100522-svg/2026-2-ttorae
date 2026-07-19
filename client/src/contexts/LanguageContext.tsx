@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, ReactNode } from "react";
 
-type Language = "ko" | "en";
+type Language = "ko" | "en" | "ja";
 
 interface LanguageContextType {
   language: Language;
@@ -125,6 +125,121 @@ const translations: Record<Language, Record<string, string>> = {
     "error.confidentiality": "비밀보장 및 예외사항 안내를 확인해주세요.",
     "error.submission": "신청 중 오류가 발생했습니다.",
     "success.submission": "신청이 완료되었습니다!",
+  },
+  ja: {
+    // Navigation
+    "nav.back": "戻る",
+    "nav.apply": "申し込む",
+    
+    // Step titles
+    "step.1.title": "基本情報入力",
+    "step.2.title": "申し込みタイプ選択",
+    "step.3.title": "悩みの領域と追加情報",
+    "step.4.title": "大学生活適応スケール検査",
+    "step.5.title": "個人情報同意",
+    
+    // Step descriptions
+    "step.1.desc": "ピア友人申し込みに必要な基本情報を入力してください。",
+    "step.2.desc": "申し込みタイプを選択し、追加情報を入力してください。",
+    "step.3.desc": "共有したい悩みの領域を選択し、追加内容を作成してください。",
+    "step.4.desc": "5点リッカート尺度で大学生活適応度を評価してください。",
+    "step.5.desc": "ピア相談プログラム参加に必要な同意事項を確認してください。",
+    
+    // Form labels
+    "form.name": "名前",
+    "form.studentId": "学番",
+    "form.phone": "携帯電話番号",
+    "form.college": "単科大学",
+    "form.collegeOther": "単科大学入力",
+    "form.department": "学科",
+    "form.gender": "性別",
+    "form.gender.male": "男性",
+    "form.gender.female": "女性",
+    "form.gender.other": "その他",
+    "form.nationality": "国籍",
+    "form.nationality.local": "国内",
+    "form.nationality.international": "留学生",
+    "form.nationality.input": "国籍入力",
+    
+    // Application type
+    "form.applicationType": "申し込みタイプ",
+    "form.applicationType.referred": "1. ピア相談者が事前に勧誘して申し込み",
+    "form.applicationType.direct": "2. 本人申し込み",
+    "form.counselorName": "ピア相談者名",
+    "form.availableTime": "相談可能時間",
+    "form.availableTime.day": "曜日",
+    "form.availableTime.start": "開始",
+    "form.availableTime.end": "終了",
+    
+    // Topics
+    "form.topics": "悩みの領域",
+    "form.topics.relationships": "人間関係",
+    "form.topics.dating": "恋愛",
+    "form.topics.family": "家族",
+    "form.topics.academics": "学業",
+    "form.topics.career": "進路",
+    "form.topics.adaptation": "大学生活適応",
+    "form.topics.stress": "ストレス",
+    "form.topics.loneliness": "孤独感",
+    "form.topics.confidence": "自信",
+    "form.topics.unsure": "まだよくわかりません",
+    "form.topics.other": "その他",
+    
+    // Story details
+    "form.storyDetails": "相談時に話したいこと（参考事項）",
+    "form.storyDetails.placeholder": "相談時に話したい内容を自由に作成してください。",
+    
+    // Scale questions
+    "scale.instruction": "次の各項目について1〜5点の中から該当する点数を選択してください。",
+    "scale.q1": "私たちの大学の雰囲気に全体的にうまく適応しています。",
+    "scale.q2": "キャンパス内でいつでも気軽に悩みを打ち明けられる友人がいます。",
+    "scale.q3": "私は学業に興味があり、勉強することが満足できます。",
+    "scale.q4": "私はキャンパス内のさまざまな活動（サークル、イベントなど）に積極的に参加しています。",
+    "scale.q5": "全体的に大学生活に満足しています。",
+    "scale.disagree": "全く同意しません",
+    "scale.agree": "非常に同意します",
+    
+    // Agreements
+    "agreement.confidentiality": "秘密保持と例外事項の案内",
+    "agreement.confidentiality.desc": "ピア相談プログラムでは相談内容の秘密を保証します。ただし、以下の場合には秘密保持の例外が適用されます：",
+    "agreement.confidentiality.suicide": "自殺の危険がある場合",
+    "agreement.confidentiality.harm": "他者に直接的な害を与える危険がある場合",
+    "agreement.confidentiality.legal": "法的に報告義務がある場合",
+    "agreement.privacy": "個人情報の収集・利用に同意します。",
+    "agreement.terms": "ピア相談プログラム運営案内に同意します。",
+    "agreement.confidentiality.check": "秘密保持と例外事項の案内に同意します。",
+    
+    // Buttons
+    "button.prev": "前へ",
+    "button.next": "次へ",
+    "button.submit": "申し込み完了",
+    "button.submitting": "提出中...",
+    "button.home": "ホームに戻る",
+    
+    // Success message
+    "success.title": "申し込みが完了しました！",
+    "success.referred": "相談者との相談をお楽しみください。",
+    "success.direct": "入力された相談可能時間に合わせて相談を進めます。",
+    "success.desc": "管理者が申し込みを確認した後、ご連絡します。",
+    
+    // Error messages
+    "error.name": "名前を入力してください。",
+    "error.studentId": "学番を入力してください。",
+    "error.phone": "携帯電話番号を入力してください。",
+    "error.college": "単科大学を選択してください。",
+    "error.collegeOther": "単科大学を入力してください。",
+    "error.department": "学科を入力してください。",
+    "error.gender": "性別を選択してください。",
+    "error.nationality": "国籍を入力してください。",
+    "error.applicationType": "申し込みタイプを選択してください。",
+    "error.counselorName": "相談者名を入力してください。",
+    "error.topics": "悩みの領域を選択してください。",
+    "error.scale": "すべてのスケール項目に答えてください。",
+    "error.privacy": "個人情報の収集・利用同意を確認してください。",
+    "error.terms": "ピア相談プログラム運営案内に同意してください。",
+    "error.confidentiality": "秘密保持と例外事項の案内に同意してください。",
+    "error.submission": "申し込み中にエラーが発生しました。",
+    "success.submission": "申し込みが完了しました！",
   },
   en: {
     // Navigation
@@ -255,7 +370,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   };
 
   const t = (key: string): string => {
-    return translations[language][key] || key;
+    return translations[language]?.[key] || key;
   };
 
   return (

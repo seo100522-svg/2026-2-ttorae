@@ -25,30 +25,30 @@ const COLLEGES = [
 ];
 
 const GENDERS = [
-  { value: "male", label: "남성 (Male)" },
-  { value: "female", label: "여성 (Female)" },
-  { value: "other", label: "기타 (Other)" },
+  { value: "male", label: "남성" },
+  { value: "female", label: "여성" },
+  { value: "other", label: "기타" },
 ];
 
 const TOPICS = [
-  { value: "인간관계", label: "인간관계 (Relationships)" },
-  { value: "연애", label: "연애 (Dating)" },
-  { value: "가족", label: "가족 (Family)" },
-  { value: "학업", label: "학업 (Academics)" },
-  { value: "진로", label: "진로 (Career)" },
-  { value: "대학생활 적응", label: "대학생활 적응 (University Adjustment)" },
-  { value: "스트레스", label: "스트레스 (Stress)" },
-  { value: "외로움", label: "외로움 (Loneliness)" },
-  { value: "자신감", label: "자신감 (Confidence)" },
-  { value: "아직 잘 모르겠음", label: "아직 잘 모르겠음 (Not sure yet)" },
+  { value: "인간관계", label: "인간관계" },
+  { value: "연애", label: "연애" },
+  { value: "가족", label: "가족" },
+  { value: "학업", label: "학업" },
+  { value: "진로", label: "진로" },
+  { value: "대학생활 적응", label: "대학생활 적응" },
+  { value: "스트레스", label: "스트레스" },
+  { value: "외로움", label: "외로움" },
+  { value: "자신감", label: "자신감" },
+  { value: "아직 잘 모르겠음", label: "아직 잘 모르겠음" },
 ];
 
 const SCALE_QUESTIONS = [
-  "나는 우리 대학교의 분위기에 전반적으로 잘 적응하고 있다. (I am well adapted to the overall atmosphere of this university.)",
-  "캠퍼스 내에서 내 고민을 언제든 편하게 털어놓을 친구가 있다. (I have a friend on campus with whom I can comfortably share my concerns.)",
-  "나는 학업에 관심이 있고 공부하는 것이 만족스럽다. (I am interested in my studies and find studying satisfying.)",
-  "나는 캠퍼스 내 다양한 활동(동아리, 행사 등)에 적극적으로 참여하고 있다. (I actively participate in various campus activities.)",
-  "전반적으로 대학생활에 만족하고 있다. (Overall, I am satisfied with my university life.)",
+  "나는 우리 대학교의 분위기에 전반적으로 잘 적응하고 있다.",
+  "캠퍼스 내에서 내 고민을 언제든 편하게 털어놓을 친구가 있다.",
+  "나는 학업에 관심이 있고 공부하는 것이 만족스럽다.",
+  "나는 캠퍼스 내 다양한 활동(동아리, 행사 등)에 적극적으로 참여하고 있다.",
+  "전반적으로 대학생활에 만족하고 있다.",
 ];
 
 const WEEKDAYS = ["월", "화", "수", "목", "금"];
@@ -339,6 +339,16 @@ export default function ApplicationForm() {
             >
               English
             </button>
+            <button
+              onClick={() => setLanguage("ja")}
+              className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
+                language === "ja" 
+                  ? "bg-slate-700 text-white" 
+                  : "text-slate-600 hover:bg-slate-100"
+              }`}
+            >
+              日本語
+            </button>
           </div>
         </div>
 
@@ -461,11 +471,11 @@ export default function ApplicationForm() {
                   <RadioGroup value={formData.nationalityType} onValueChange={(value) => setFormData({ ...formData, nationalityType: value as any })}>
                     <div className="flex items-center space-x-2">
                       <RadioGroupItem value="local" id="local" />
-                      <Label htmlFor="local" className="font-normal cursor-pointer">{language === "ko" ? "내국인 (Domestic)" : "Domestic"}</Label>
+                      <Label htmlFor="local" className="font-normal cursor-pointer">{language === "ko" ? "내국인" : "Domestic"}</Label>
                     </div>
                     <div className="flex items-center space-x-2">
                       <RadioGroupItem value="international" id="international" />
-                      <Label htmlFor="international" className="font-normal cursor-pointer">{language === "ko" ? "외국인 유학생 (International Student)" : "International Student"}</Label>
+                      <Label htmlFor="international" className="font-normal cursor-pointer">{language === "ko" ? "외국인 유학생" : "International Student"}</Label>
                     </div>
                   </RadioGroup>
                 </div>
