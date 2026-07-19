@@ -78,8 +78,8 @@ export default function Home() {
                 icon: "💬",
               },
               {
-                title: "비교과 중단 5점 부여",
-                description: "또래소담 프로그램 참여 시 비교과 중단 5점이 부여됩니다.",
+                title: "비교과 점수 5점 부여",
+                description: "또래소담 프로그램 참여 시 비교과 점수 5점이 부여됩니다.",
                 icon: "🎯",
               },
             ].map((feature, index) => (
