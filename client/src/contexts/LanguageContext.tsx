@@ -104,7 +104,7 @@ const translations: Record<Language, Record<string, string>> = {
     "form.nationality.input": "Country of Residence",
     
     "form.agreement.privacy": "I agree to the collection and use of personal information. The collected information will be used only for the operation of the Peers program and matching purposes, and will be protected according to relevant laws and regulations. I understand that peer counselors are not professional counselors but have received peer counseling training, and in crisis situations, I may be referred to the Student Counseling Center.",
-    "form.agreement.confidentiality": "I understand that all conversations with peer counselors are confidential and will be kept private.",
+    "form.agreement.confidentiality": "I understand that all conversations with peer counselors are confidential and will be kept private. However, confidentiality may not be maintained if there is a risk of harm to myself or others.",
     
     // Placeholders
     "placeholder.name": "Enter your full name",
@@ -305,7 +305,7 @@ const translations: Record<Language, Record<string, string>> = {
     "form.nationality.input": "거주 국가",
     
     "form.agreement.privacy": "개인정보 수집 및 이용에 동의합니다. 수집된 정보는 또래소담 프로그램 운영 및 매칭 목적으로만 사용되며, 관련 법규에 따라 보호됩니다. 또래상담자는 전문상담자가 아닌 또래상담교육을 받은 또래상담자이며, 위기상황에는 학생상담센터와 연계될 수 있음을 이해합니다.",
-    "form.agreement.confidentiality": "또래상담자와의 모든 대화는 비밀로 유지되며 개인정보가 보호됨을 이해합니다.",
+    "form.agreement.confidentiality": "또래상담자와의 모든 대화는 비밀로 유지되나, 자신이나 타인을 해할 위험이 있을 경우 비밀보장에서 예외된다.",
     
     // Placeholders
     "placeholder.name": "이름을 입력해주세요",
@@ -506,7 +506,7 @@ const translations: Record<Language, Record<string, string>> = {
     "form.nationality.input": "居住国",
     
     "form.agreement.privacy": "個人情報の収集と使用に同意します。収集された情報はピアプログラムの運営とマッチング目的でのみ使用され、関連法規に従って保護されます。ピアカウンセラーは専門のカウンセラーではなく、ピアカウンセリング研修を受けたピアカウンセラーであり、危機的状況では学生相談センターと連携される可能性があることを理解します。",
-    "form.agreement.confidentiality": "ピアカウンセラーとのすべての会話は機密扱いとなり、個人情報が保護されることを理解します。",
+    "form.agreement.confidentiality": "ピアカウンセラーとのすべての会話は機密扱いとなり、個人情報が保護されることを理解します。ただし、自分自身または他者を害するおそれがある場合、機密保持は例外となる場合があります。",
     
     // Placeholders
     "placeholder.name": "名前を入力してください",
