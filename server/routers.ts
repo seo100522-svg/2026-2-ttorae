@@ -43,6 +43,7 @@ export const appRouter = router({
           })).optional(),
           topics: z.array(z.string()),
           additionalMessage: z.string().optional(),
+          scaleResponses: z.record(z.string(), z.number()).optional(),
           agreePrivacy: z.boolean(),
           agreeConfidentiality: z.boolean(),
         })
@@ -55,17 +56,52 @@ export const appRouter = router({
           college: input.college,
           department: input.department,
           gender: input.gender,
+          grade: input.grade,
           nationalityType: input.nationalityType,
           nationality: input.nationality || null,
+          applicationType: input.applicationType,
+          counselorName: input.counselorName || null,
+          agreedSchedule: input.agreedSchedule || null,
+          availableTimes: input.availableTimes ? JSON.stringify(input.availableTimes) : null,
           topics: JSON.stringify(input.topics),
           storyDetails: input.additionalMessage || null,
           status: "pending" as const,
         };
 
         const result = await createApplication(applicationData);
+        const applicationId = result.insertId || result;
+        
+        // Save AUCCQ scale responses if provided
+        if (input.scaleResponses && Object.keys(input.scaleResponses).length > 0) {
+          const responses = input.scaleResponses as Record<string, number>;
+          await createScaleResponse({
+            applicationId: applicationId as number,
+            q1: (responses["1"] || responses[1]) as number || 0,
+            q2: (responses["2"] || responses[2]) as number || 0,
+            q3: (responses["3"] || responses[3]) as number || 0,
+            q4: (responses["4"] || responses[4]) as number || 0,
+            q5: (responses["5"] || responses[5]) as number || 0,
+            q6: (responses["6"] || responses[6]) as number || 0,
+            q7: (responses["7"] || responses[7]) as number || 0,
+            q8: (responses["8"] || responses[8]) as number || 0,
+            q9: (responses["9"] || responses[9]) as number || 0,
+            q10: (responses["10"] || responses[10]) as number || 0,
+            q11: (responses["11"] || responses[11]) as number || 0,
+            q12: (responses["12"] || responses[12]) as number || 0,
+            q13: (responses["13"] || responses[13]) as number || 0,
+            q14: (responses["14"] || responses[14]) as number || 0,
+            q15: (responses["15"] || responses[15]) as number || 0,
+            q16: (responses["16"] || responses[16]) as number || 0,
+            q17: (responses["17"] || responses[17]) as number || 0,
+            q18: (responses["18"] || responses[18]) as number || 0,
+            q19: (responses["19"] || responses[19]) as number || 0,
+            q20: (responses["20"] || responses[20]) as number || 0,
+          });
+        }
+        
         return {
           success: true,
-          applicationId: result,
+          applicationId: applicationId,
           message: "Application submitted successfully",
         };
       }),

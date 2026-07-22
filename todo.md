@@ -113,8 +113,9 @@
 ## Step 5: 대학생활적응 척도(AUCCQ) 구현
 - [x] AUCCQ 문항 20개 정의 및 번역 (한국어/English/日本語)
 - [x] Step 5 UI 구현 (5점 Likert 척도)
-- [ ] AUCCQ 점수 계산 로직 구현
-- [ ] 데이터베이스에 AUCCQ 응답 저장
+- [x] tRPC 뮤테이션으로 데이터베이스에 신청 저장
+- [x] 제출 실패 시 오류 메시지 다국어 지원
+- [x] 제출 성공 시 /success 페이지로 네비게이션
 - [x] ApplicationForm에 Step 5 추가
 
 ## 제출 성공 페이지 구현

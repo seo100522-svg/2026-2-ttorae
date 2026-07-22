@@ -125,6 +125,7 @@ const translations: Record<Language, Record<string, string>> = {
     "button.prev": "Previous",
     "button.next": "Next",
     "button.submit": "Complete Application",
+    "button.submitting": "Submitting...",
     "button.home": "Back to Home",
     "button.applyAgain": "Apply Again",
     "button.addTime": "Add Time Slot",
@@ -147,6 +148,7 @@ const translations: Record<Language, Record<string, string>> = {
     "error.privacyRequired": "Please agree to the privacy policy",
     "error.confidentialityRequired": "Please agree to the confidentiality agreement",
     "error.auccqRequired": "Please answer all AUCCQ questions",
+    "error.submitFailed": "Failed to submit application",
     
     // Messages
     "message.submitSuccess": "Application submitted successfully!",
@@ -304,6 +306,7 @@ const translations: Record<Language, Record<string, string>> = {
     "button.home": "홈으로 돌아가기",
     "button.applyAgain": "다시 신청하기",
     "button.submit": "신청 완료",
+    "button.submitting": "제출 중...",
     "button.addTime": "시간 추가",
     "button.delete": "삭제",
     "button.apply": "신청하기",
@@ -324,6 +327,7 @@ const translations: Record<Language, Record<string, string>> = {
     "error.privacyRequired": "개인정보 수집 및 이용에 동의해주세요",
     "error.confidentialityRequired": "비밀보장 약관에 동의해주세요",
     "error.auccqRequired": "AUCCQ 모든 문항에 답변해주세요",
+    "error.submitFailed": "신청 제출 실패",
     
     // Messages
     "message.submitSuccess": "신청이 완료되었습니다!",
@@ -481,6 +485,7 @@ const translations: Record<Language, Record<string, string>> = {
     "button.home": "ホームに戻る",
     "button.applyAgain": "もう一度申請する",
     "button.submit": "申請完了",
+    "button.submitting": "送信中...",
     "button.addTime": "時間を追加",
     "button.delete": "削除",
     "button.apply": "申請する",
@@ -501,6 +506,7 @@ const translations: Record<Language, Record<string, string>> = {
     "error.privacyRequired": "個人情報の収集と使用に同意してください",
     "error.confidentialityRequired": "秘密保持契約に同意してください",
     "error.auccqRequired": "AUCCQのすべての訪問に答えてください",
+    "error.submitFailed": "申請の送信に失敗しました",
     
     // Messages
     "message.submitSuccess": "申請が完了しました！",
@@ -578,3 +584,7 @@ export function useLanguage(): LanguageContextType {
 // Note: Additional translation keys needed for SubmissionSuccess page:
 // - button.home: "Home" / "홈" / "ホーム"
 // - button.applyAgain: "Apply Again" / "다시 신청하기" / "もう一度申請する"
+
+// Note: Additional translation keys needed:
+// - error.submitFailed: "Failed to submit application" / "신청 제출 실패" / "申請の送信に失敗しました"
+// - button.submitting: "Submitting..." / "제출 중..." / "送信中..."

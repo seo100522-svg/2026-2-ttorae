@@ -40,6 +40,12 @@ export const applications = mysqlTable("applications", {
   nationalityType: mysqlEnum("nationalityType", ["local", "international"]).notNull(),
   nationality: varchar("nationality", { length: 100 }),
   gender: mysqlEnum("gender", ["male", "female", "other"]),
+  grade: varchar("grade", { length: 50 }),
+  // 신청 유형 및 상담자 정보
+  applicationType: mysqlEnum("applicationType", ["pre_arranged", "direct"]).notNull(),
+  counselorName: varchar("counselorName", { length: 100 }),
+  agreedSchedule: varchar("agreedSchedule", { length: 255 }),
+  availableTimes: text("availableTimes"), // JSON array string
   // 상담 주제 (JSON 배열로 저장)
   topics: text("topics").notNull(), // JSON string
   // 상담 내용
@@ -56,17 +62,32 @@ export type InsertApplication = typeof applications.$inferInsert;
 
 /**
  * 척도 검사 응답 테이블
- * 대학생활적응 검사의 5점 리커트 척도 응답을 저장합니다.
+ * 대학생활적응 검사의 20문항 리커트 척도 응답을 저장합니다.
  */
 export const scaleResponses = mysqlTable("scaleResponses", {
   id: int("id").autoincrement().primaryKey(),
   applicationId: int("applicationId").notNull(),
-  // 5가지 척도 항목 (각 1~5점)
-  q1: int("q1").notNull(), // 대학교 분위기 적응
-  q2: int("q2").notNull(), // 고민 나눌 친구
-  q3: int("q3").notNull(), // 학업 관심 및 만족
-  q4: int("q4").notNull(), // 캠퍼스 활동 참여
-  q5: int("q5").notNull(), // 전반적 대학생활 만족도
+  // 20개 AUCCQ 척도 항목 (각 1~5점)
+  q1: int("q1").notNull(),
+  q2: int("q2").notNull(),
+  q3: int("q3").notNull(),
+  q4: int("q4").notNull(),
+  q5: int("q5").notNull(),
+  q6: int("q6").notNull(),
+  q7: int("q7").notNull(),
+  q8: int("q8").notNull(),
+  q9: int("q9").notNull(),
+  q10: int("q10").notNull(),
+  q11: int("q11").notNull(),
+  q12: int("q12").notNull(),
+  q13: int("q13").notNull(),
+  q14: int("q14").notNull(),
+  q15: int("q15").notNull(),
+  q16: int("q16").notNull(),
+  q17: int("q17").notNull(),
+  q18: int("q18").notNull(),
+  q19: int("q19").notNull(),
+  q20: int("q20").notNull(),
   // 타임스탐프
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),

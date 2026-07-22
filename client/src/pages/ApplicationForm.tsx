@@ -10,6 +10,8 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { AUCCQScale } from "@/components/AUCCQScale";
 import { toast } from "sonner";
+import { trpc } from "@/lib/trpc";
+import { useLocation } from "wouter";
 
 interface FormData {
   // Step 1: Basic Info
@@ -38,7 +40,9 @@ interface FormData {
 
 export default function ApplicationForm() {
   const { t, language } = useLanguage();
+  const [, navigate] = useLocation();
   const [currentStep, setCurrentStep] = useState(1);
+  const createApplicationMutation = trpc.applications.create.useMutation();
   const [formData, setFormData] = useState<FormData>({
     studentName: "",
     studentId: "",
@@ -636,15 +640,40 @@ export default function ApplicationForm() {
                 </Button>
               ) : (
                 <Button
-                  onClick={() => {
+                  onClick={async () => {
                     if (validateStep(5)) {
-                      toast.success(t("message.submitSuccess"));
-                      // TODO: Save to database
+                      try {
+                        await createApplicationMutation.mutateAsync({
+                          studentName: formData.studentName,
+                          studentId: formData.studentId,
+                          phoneNumber: formData.phoneNumber,
+                          college: formData.college,
+                          department: formData.department,
+                          gender: formData.gender as "male" | "female" | "other",
+                          grade: formData.grade,
+                          nationalityType: formData.nationalityType,
+                          nationality: formData.nationality,
+                          applicationType: formData.applicationType as "pre_arranged" | "direct",
+                          counselorName: formData.counselorName,
+                          agreedSchedule: formData.agreedSchedule,
+                          availableTimes: formData.availableTimes,
+                          topics: formData.topics,
+                          additionalMessage: formData.additionalMessage,
+                          agreePrivacy: formData.agreePrivacy,
+                          agreeConfidentiality: formData.agreeConfidentiality,
+                        });
+                        toast.success(t("message.submitSuccess"));
+                        navigate("/success");
+                      } catch (error) {
+                        toast.error(t("error.submitFailed") || "Failed to submit application");
+                        console.error("Submission error:", error);
+                      }
                     }
                   }}
+                  disabled={createApplicationMutation.isPending}
                   className="flex-1 bg-green-600 hover:bg-green-700"
                 >
-                  {t("button.submit")}
+                  {createApplicationMutation.isPending ? t("button.submitting") || "Submitting..." : t("button.submit")}
                 </Button>
               )}
             </div>
