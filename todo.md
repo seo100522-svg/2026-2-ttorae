@@ -118,10 +118,9 @@
 - [x] ApplicationForm에 Step 5 추가
 
 ## 제출 성공 페이지 구현
-- [ ] SubmissionSuccess.tsx 페이지 생성
-- [ ] 신청 정보 요약 표시
-- [ ] 다음 단계 안내 메시지
-- [ ] 다국어 지원
+- [x] SubmissionSuccess.tsx 페이지 생성
+- [x] 다음 단계 안내 메시지
+- [x] 다국어 지원 (button.home, button.applyAgain)
 
 ## 관리자 대시보드 구현
 - [ ] AdminDashboard.tsx 생성

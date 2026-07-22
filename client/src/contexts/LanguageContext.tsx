@@ -125,6 +125,8 @@ const translations: Record<Language, Record<string, string>> = {
     "button.prev": "Previous",
     "button.next": "Next",
     "button.submit": "Complete Application",
+    "button.home": "Back to Home",
+    "button.applyAgain": "Apply Again",
     "button.addTime": "Add Time Slot",
     "button.delete": "Delete",
     "button.apply": "Apply",
@@ -148,6 +150,12 @@ const translations: Record<Language, Record<string, string>> = {
     
     // Messages
     "message.submitSuccess": "Application submitted successfully!",
+    "message.submitSuccessDesc": "Your application has been successfully submitted. We will contact you soon.",
+    "message.nextSteps": "Next Steps",
+    "message.step1": "Step 1: We will review your application.",
+    "message.step2": "Step 2: We will match you with an appropriate peer counselor.",
+    "message.step3": "Step 3: The counselor will contact you to schedule your first meeting.",
+    "message.step4": "Step 4: The peer counseling program will begin.",
     
     // AUCCQ Scale (Step 5)
     "form.step5.title": "Step 5: University Life Adaptation Scale",
@@ -291,8 +299,10 @@ const translations: Record<Language, Record<string, string>> = {
     "error.nationalityRequired": "거주 국가를 입력해주세요",
     
     // Buttons
-    "button.prev": "뒤로",
+    "button.prev": "뒠로",
     "button.next": "다음",
+    "button.home": "홈으로 돌아가기",
+    "button.applyAgain": "다시 신청하기",
     "button.submit": "신청 완료",
     "button.addTime": "시간 추가",
     "button.delete": "삭제",
@@ -317,6 +327,12 @@ const translations: Record<Language, Record<string, string>> = {
     
     // Messages
     "message.submitSuccess": "신청이 완료되었습니다!",
+    "message.submitSuccessDesc": "신청이 성공적으로 완료되었습니다. 곧 담당자가 연락드리겠습니다.",
+    "message.nextSteps": "다음 단계",
+    "message.step1": "1단계: 담당자가 귀하의 신청을 검토합니다.",
+    "message.step2": "2단계: 적절한 또래상담자와 매칭됩니다.",
+    "message.step3": "3단계: 상담자가 연락하여 첫 만남을 예약합니다.",
+    "message.step4": "4단계: 또래상담 프로그램이 시작됩니다.",
     
     // AUCCQ Scale (Step 5)
     "form.step5.title": "5단계: 대학생활적응 척도",
@@ -462,6 +478,8 @@ const translations: Record<Language, Record<string, string>> = {
     // Buttons
     "button.prev": "戻る",
     "button.next": "次へ",
+    "button.home": "ホームに戻る",
+    "button.applyAgain": "もう一度申請する",
     "button.submit": "申請完了",
     "button.addTime": "時間を追加",
     "button.delete": "削除",
@@ -486,6 +504,12 @@ const translations: Record<Language, Record<string, string>> = {
     
     // Messages
     "message.submitSuccess": "申請が完了しました！",
+    "message.submitSuccessDesc": "申請が正常に完了しました。もうすぐ担当者から連絡させていただきます。",
+    "message.nextSteps": "次のステップ",
+    "message.step1": "ステップ 1: 担当者が申請を確認します。",
+    "message.step2": "ステップ 2: 適切なピアカウンセラーとマッチングします。",
+    "message.step3": "ステップ 3: カウンセラーが連絡して初回面談を予約します。",
+    "message.step4": "ステップ 4: ピアカウンセリングプログラムが開始します。",
     
     // AUCCQ Scale (Step 5)
     "form.step5.title": "ステップ5：大学生活適応尺度",
@@ -549,3 +573,8 @@ export function useLanguage(): LanguageContextType {
   }
   return context;
 }
+
+
+// Note: Additional translation keys needed for SubmissionSuccess page:
+// - button.home: "Home" / "홈" / "ホーム"
+// - button.applyAgain: "Apply Again" / "다시 신청하기" / "もう一度申請する"
