@@ -17,11 +17,11 @@ const translations: Record<Language, Record<string, string>> = {
     "nav.back": "Back",
     
     // Home page
-    "home.hero.title": "Peers: Your Supportive Companion in University Life",
+    "home.hero.title": "Apply for Peer Friend",
     "home.hero.subtitle": "Share your concerns about school life, relationships, and career with Peers counselors in a comfortable environment.",
     "home.hero.desc": "This page is for applying to participate in the Peers program as a peer friend.",
     "home.features.title": "What is the Peers Program?",
-    "home.features.feature1.title": "1:1 Matching with Peer Counselors",
+    "home.features.feature1.title": "1:1 Peer Counseling / Group Activities",
     "home.features.feature1.desc": "1:1 Peer Counseling: You will be matched 1:1 with a peer counselor for counseling sessions. Group Activities: Participate in group activities with a small group of peer counselors.",
     "home.features.feature2.title": "Concerns About School Life and Daily Life",
     "home.features.feature2.desc": "Share everyday concerns about academics, relationships, and career.",
@@ -127,6 +127,8 @@ const translations: Record<Language, Record<string, string>> = {
     "button.submit": "Complete Application",
     "button.addTime": "Add Time Slot",
     "button.delete": "Delete",
+    "button.apply": "Apply",
+    "button.applyNow": "Apply Now",
     
     // Errors
     "error.nameRequired": "Please enter your name",
@@ -153,11 +155,11 @@ const translations: Record<Language, Record<string, string>> = {
     "nav.back": "뒤로",
     
     // Home page
-    "home.hero.title": "또래소담: 대학생활의 든든한 동반자",
+    "home.hero.title": "또래친구 신청하기",
     "home.hero.subtitle": "학교생활, 인간관계, 진로 등 대학생활의 고민을 또래상담자와 편안하게 나누세요.",
     "home.hero.desc": "이 페이지는 또래소담 프로그램의 또래친구로 참여하기 위한 신청 페이지입니다.",
     "home.features.title": "또래소담 프로그램이란?",
-    "home.features.feature1.title": "또래상담자와 1:1 매칭",
+    "home.features.feature1.title": "또래상담자와 1:1 상담 / 집단활동 진행",
     "home.features.feature1.desc": "1:1 또래상담/집단활동 진행: 진행될 프로그램 관련 사항은 또래상담자가 연락드릴 예정입니다.",
     "home.features.feature2.title": "학교생활과 일상의 고민",
     "home.features.feature2.desc": "학업, 인간관계, 진로 등 일상의 고민을 편하게 나눌 수 있습니다.",
@@ -258,11 +260,13 @@ const translations: Record<Language, Record<string, string>> = {
     "error.nationalityRequired": "거주 국가를 입력해주세요",
     
     // Buttons
-    "button.prev": "이전",
+    "button.prev": "뒤로",
     "button.next": "다음",
-    "button.submit": "신청 완료하기",
+    "button.submit": "신청 완료",
     "button.addTime": "시간 추가",
     "button.delete": "삭제",
+    "button.apply": "신청하기",
+    "button.applyNow": "신청하기",
     
     // Errors
     "error.nameRequired": "이름을 입력해주세요",
@@ -289,11 +293,11 @@ const translations: Record<Language, Record<string, string>> = {
     "nav.back": "戻る",
     
     // Home page
-    "home.hero.title": "ピア: 大学生活の心強いパートナー",
+    "home.hero.title": "ピアフレンドに申請してください",
     "home.hero.subtitle": "学校生活、人間関係、キャリアなど、大学生活の悩みをピアカウンセラーと気軽に共有しましょう。",
     "home.hero.desc": "このページはピアプログラムのピアフレンドとして参加するための申請ページです。",
     "home.features.title": "ピアプログラムとは？",
-    "home.features.feature1.title": "ピアカウンセラーとの1:1マッチング",
+    "home.features.feature1.title": "1:1ピアカウンセリング / 集団活動の実施",
     "home.features.feature1.desc": "ピアプログラムのピアカウンセラーと1:1でマッチングされ、カウンセリングを受けます。",
     "home.features.feature2.title": "学校生活と日常の悩み",
     "home.features.feature2.desc": "学業、人間関係、キャリアなど、日常の悩みを気軽に共有できます。",
@@ -394,11 +398,13 @@ const translations: Record<Language, Record<string, string>> = {
     "error.nationalityRequired": "居住国を入力してください",
     
     // Buttons
-    "button.prev": "前へ",
+    "button.prev": "戻る",
     "button.next": "次へ",
-    "button.submit": "申請を完了する",
+    "button.submit": "申請完了",
     "button.addTime": "時間を追加",
     "button.delete": "削除",
+    "button.apply": "申請する",
+    "button.applyNow": "申請する",
     
     // Errors
     "error.nameRequired": "名前を入力してください",
