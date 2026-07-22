@@ -158,7 +158,7 @@ export default function AdminDashboard() {
                     <p className="font-medium">
                       {selectedApplication.nationalityType === "local"
                         ? t("form.nationality.local")
-                        : selectedApplication.nationality || "N/A"}
+                        : selectedApplication.nationality || t("placeholder.notAvailable")}
                     </p>
                   </div>
                 </div>
@@ -180,11 +180,11 @@ export default function AdminDashboard() {
                     <>
                       <div>
                         <p className="text-sm text-muted-foreground">{t("form.counselorName.label")}</p>
-                        <p className="font-medium">{selectedApplication.counselorName || "N/A"}</p>
+                        <p className="font-medium">{selectedApplication.counselorName || t("placeholder.notAvailable")}</p>
                       </div>
                       <div>
                         <p className="text-sm text-muted-foreground">{t("form.agreedSchedule.label")}</p>
-                        <p className="font-medium">{selectedApplication.agreedSchedule || "N/A"}</p>
+                        <p className="font-medium">{selectedApplication.agreedSchedule || t("placeholder.notAvailable")}</p>
                       </div>
                     </>
                   )}

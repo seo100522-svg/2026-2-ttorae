@@ -209,6 +209,7 @@ const translations: Record<Language, Record<string, string>> = {
     "table.submittedAt": "Submitted At",
     "table.actions": "Actions",
     "button.view": "View",
+    "placeholder.notAvailable": "N/A",
   },
   
   ko: {
@@ -409,6 +410,7 @@ const translations: Record<Language, Record<string, string>> = {
     "table.submittedAt": "제출 시간",
     "table.actions": "작업",
     "button.view": "보기",
+    "placeholder.notAvailable": "N/A",
   },
   
   ja: {
@@ -609,6 +611,7 @@ const translations: Record<Language, Record<string, string>> = {
     "table.submittedAt": "提出日時",
     "table.actions": "アクション",
     "button.view": "表示",
+    "placeholder.notAvailable": "N/A",
   },
 };
 
