@@ -43,7 +43,7 @@ const translations: Record<Language, Record<string, string>> = {
     "form.subtitle": "Apply to become a peer counselor for the Peers program",
     
     "form.step1.title": "Step 1: Basic Information",
-    "form.step2.title": "Step 2: Application Type",
+    "form.step2.title": "Step 2: Reason for Application",
     "form.step3.title": "Step 3: Concerns & Additional Info",
     "form.step4.title": "Step 4: Agreements & Confirmation",
     
@@ -62,8 +62,8 @@ const translations: Record<Language, Record<string, string>> = {
     "form.grade.4": "4th Year",
     
     "form.applicationType.label": "Application Type",
-    "form.applicationType.preArranged": "Pre-arranged with a counselor",
-    "form.applicationType.direct": "Direct application",
+    "form.applicationType.preArranged": "Recommended by Peer Counselor",
+    "form.applicationType.direct": "Self-initiated Application",
     
     "form.counselorName.label": "Counselor Name",
     "form.counselorName.hint": "Please enter the name of the counselor who referred you",
@@ -181,7 +181,7 @@ const translations: Record<Language, Record<string, string>> = {
     "form.subtitle": "또래소담 프로그램의 또래친구로 신청해주세요",
     
     "form.step1.title": "1단계: 기본정보",
-    "form.step2.title": "2단계: 신청 유형",
+    "form.step2.title": "2단계: 활동 신청 계기",
     "form.step3.title": "3단계: 고민 영역 및 추가정보",
     "form.step4.title": "4단계: 동의 및 확인",
     
@@ -200,8 +200,8 @@ const translations: Record<Language, Record<string, string>> = {
     "form.grade.4": "4학년",
     
     "form.applicationType.label": "신청 유형",
-    "form.applicationType.preArranged": "미리 섭외된 상담자와 신청",
-    "form.applicationType.direct": "직접 신청",
+    "form.applicationType.preArranged": "또래상담자의 권유/추천으로 신청",
+    "form.applicationType.direct": "자발적 신청(직접 신청)",
     
     "form.counselorName.label": "상담자 이름",
     "form.counselorName.hint": "미리 섭외해주신 상담자의 이름을 입력해주세요",
@@ -319,7 +319,7 @@ const translations: Record<Language, Record<string, string>> = {
     "form.subtitle": "ピアプログラムのピアフレンドとして申請してください",
     
     "form.step1.title": "ステップ1：基本情報",
-    "form.step2.title": "ステップ2：申請タイプ",
+    "form.step2.title": "ステップ2：活動申請の理由",
     "form.step3.title": "ステップ3：悩みの分野と追加情報",
     "form.step4.title": "ステップ4：同意と確認",
     
@@ -338,8 +338,8 @@ const translations: Record<Language, Record<string, string>> = {
     "form.grade.4": "4年生",
     
     "form.applicationType.label": "申請タイプ",
-    "form.applicationType.preArranged": "事前に紹介されたカウンセラーと申請",
-    "form.applicationType.direct": "直接申請",
+    "form.applicationType.preArranged": "ピアカウンセラーの推奨で申請",
+    "form.applicationType.direct": "自発的に申請（直接申請）",
     
     "form.counselorName.label": "カウンセラー名",
     "form.counselorName.hint": "事前に紹介してくれたカウンセラーの名前を入力してください",
