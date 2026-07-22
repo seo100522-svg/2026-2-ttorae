@@ -131,7 +131,7 @@ export default function Home() {
                   <CardTitle className="text-xl">{t(feature.titleKey)}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-slate-600">{t(feature.descKey)}</p>
+                  <p className="text-slate-600" style={{fontSize: '15px'}}>{t(feature.descKey)}</p>
                 </CardContent>
               </Card>
             ))}
