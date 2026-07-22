@@ -305,7 +305,7 @@ const translations: Record<Language, Record<string, string>> = {
     "form.nationality.input": "거주 국가",
     
     "form.agreement.privacy": "개인정보 수집 및 이용에 동의합니다. 수집된 정보는 또래소담 프로그램 운영 및 매칭 목적으로만 사용되며, 관련 법규에 따라 보호됩니다. 또래상담자는 전문상담자가 아닌 또래상담교육을 받은 또래상담자이며, 위기상황에는 학생상담센터와 연계될 수 있음을 이해합니다.",
-    "form.agreement.confidentiality": "또래상담자와의 모든 대화는 비밀로 유지되나, 자신이나 타인을 해할 위험이 있을 경우 비밀보장에서 예외된다.",
+    "form.agreement.confidentiality": "또래상담자와의 모든 대화는 비밀로 유지되나, 자신이나 타인을 해할 위험이 있을 경우 비밀보장에서 예외됩니다.",
     
     // Placeholders
     "placeholder.name": "이름을 입력해주세요",
