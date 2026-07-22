@@ -187,7 +187,7 @@ const translations: Record<Language, Record<string, string>> = {
     
     "form.name": "이름",
     "form.studentId": "학번",
-    "form.phone": "휴대전화 번호",
+    "form.phone": "전화번호",
     "form.college": "단과대학",
     "form.department": "학과",
     "form.gender": "성별",
@@ -325,7 +325,7 @@ const translations: Record<Language, Record<string, string>> = {
     
     "form.name": "名前",
     "form.studentId": "学番",
-    "form.phone": "携帯電話番号",
+    "form.phone": "電話番号",
     "form.college": "学部",
     "form.department": "学科",
     "form.gender": "性別",
