@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { AUCCQScale } from "@/components/AUCCQScale";
 import { toast } from "sonner";
 
 interface FormData {
@@ -148,6 +149,15 @@ export default function ApplicationForm() {
         }
         return true;
 
+      case 5:
+        // Check if all 20 AUCCQ questions are answered
+        const answeredQuestions = Object.keys(formData.scaleResponses).length;
+        if (answeredQuestions < 20) {
+          toast.error(t("error.auccqRequired"));
+          return false;
+        }
+        return true;
+
       default:
         return true;
     }
@@ -206,7 +216,7 @@ export default function ApplicationForm() {
         {/* Step Indicator */}
         <div className="mb-8">
           <div className="flex justify-between items-center">
-            {[1, 2, 3, 4].map((step) => (
+            {[1, 2, 3, 4, 5].map((step) => (
               <div key={step} className="flex flex-col items-center flex-1">
                 <div
                   className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold transition-all ${
@@ -217,7 +227,7 @@ export default function ApplicationForm() {
                 >
                   {step}
                 </div>
-                {step < 4 && (
+                {step < 5 && (
                   <div
                     className={`flex-1 h-1 mx-2 mt-2 transition-all ${
                       step < currentStep ? "bg-slate-700" : "bg-slate-200"
@@ -586,6 +596,27 @@ export default function ApplicationForm() {
               </div>
             )}
 
+            {/* Step 5: AUCCQ Scale */}
+            {currentStep === 5 && (
+              <div className="space-y-6">
+                <div>
+                  <h2 className="text-xl font-semibold mb-2">{t("form.step5.title")}</h2>
+                </div>
+                <AUCCQScale
+                  responses={formData.scaleResponses}
+                  onResponseChange={(questionNumber, score) => {
+                    setFormData({
+                      ...formData,
+                      scaleResponses: {
+                        ...formData.scaleResponses,
+                        [questionNumber]: score,
+                      },
+                    });
+                  }}
+                />
+              </div>
+            )}
+
             {/* Navigation Buttons */}
             <div className="flex gap-3 pt-6 border-t">
               <Button
@@ -596,7 +627,7 @@ export default function ApplicationForm() {
               >
                 {t("button.prev")}
               </Button>
-              {currentStep < 4 ? (
+              {currentStep < 5 ? (
                 <Button
                   onClick={handleNext}
                   className="flex-1 bg-slate-700 hover:bg-slate-800"
@@ -606,7 +637,7 @@ export default function ApplicationForm() {
               ) : (
                 <Button
                   onClick={() => {
-                    if (validateStep(4)) {
+                    if (validateStep(5)) {
                       toast.success(t("message.submitSuccess"));
                       // TODO: Save to database
                     }

@@ -66,9 +66,9 @@ const translations: Record<Language, Record<string, string>> = {
     "form.applicationType.direct": "Self-initiated Application",
     
     "form.counselorName.label": "Counselor Name",
-    "form.counselorName.hint": "Please enter the name of the counselor who referred you",
+    "form.counselorName.hint": "Please enter the name of the peer counselor you will work with.",
     
-    "form.agreedSchedule.label": "Agreed Schedule",
+    "form.agreedSchedule.label": "If you have an agreed time, please note it.",
     
     "form.availableTime.label": "Available Times",
     "form.availableTime.hint": "Please select the days and times you are available for counseling",
@@ -144,9 +144,40 @@ const translations: Record<Language, Record<string, string>> = {
     "error.topicsRequired": "Please select at least one concern",
     "error.privacyRequired": "Please agree to the privacy policy",
     "error.confidentialityRequired": "Please agree to the confidentiality agreement",
+    "error.auccqRequired": "Please answer all AUCCQ questions",
     
     // Messages
     "message.submitSuccess": "Application submitted successfully!",
+    
+    // AUCCQ Scale (Step 5)
+    "form.step5.title": "Step 5: University Life Adaptation Scale",
+    "form.auccq.label": "University Life Adaptation Scale (AUCCQ)",
+    "form.auccq.instruction": "Please rate your agreement with each statement on a scale of 1 to 5.",
+    "form.auccq.scale.1": "Strongly Disagree",
+    "form.auccq.scale.2": "Disagree",
+    "form.auccq.scale.3": "Neutral",
+    "form.auccq.scale.4": "Agree",
+    "form.auccq.scale.5": "Strongly Agree",
+    "form.auccq.q1": "I am satisfied with my current academic performance.",
+    "form.auccq.q2": "I have good relationships with my classmates.",
+    "form.auccq.q3": "I feel confident in my ability to handle university coursework.",
+    "form.auccq.q4": "I have found my sense of purpose at university.",
+    "form.auccq.q5": "I feel comfortable participating in class discussions.",
+    "form.auccq.q6": "I have a good balance between academics and personal life.",
+    "form.auccq.q7": "I feel supported by my friends and peers.",
+    "form.auccq.q8": "I am satisfied with my social life at university.",
+    "form.auccq.q9": "I feel motivated to attend classes.",
+    "form.auccq.q10": "I have adapted well to university life.",
+    "form.auccq.q11": "I feel stressed about my studies.",
+    "form.auccq.q12": "I have difficulty making new friends.",
+    "form.auccq.q13": "I feel lonely at university.",
+    "form.auccq.q14": "I struggle with time management.",
+    "form.auccq.q15": "I feel anxious about my future career.",
+    "form.auccq.q16": "I have experienced homesickness.",
+    "form.auccq.q17": "I feel overwhelmed by university expectations.",
+    "form.auccq.q18": "I have difficulty concentrating on my studies.",
+    "form.auccq.q19": "I feel confident about my decision to attend this university.",
+    "form.auccq.q20": "I would recommend this university to others.",
   },
   
   ko: {
@@ -204,9 +235,9 @@ const translations: Record<Language, Record<string, string>> = {
     "form.applicationType.direct": "자발적 신청(직접 신청)",
     
     "form.counselorName.label": "상담자 이름",
-    "form.counselorName.hint": "미리 섭외해주신 상담자의 이름을 입력해주세요",
+    "form.counselorName.hint": "함께 활동을 진행할 또래상담자의 이름을 입력해주세요.",
     
-    "form.agreedSchedule.label": "약속된 상담 시간",
+    "form.agreedSchedule.label": "약속된 시간이 있다면 적어주세요.",
     
     "form.availableTime.label": "상담 가능 시간",
     "form.availableTime.hint": "상담 가능한 요일과 시간을 선택해주세요",
@@ -282,9 +313,40 @@ const translations: Record<Language, Record<string, string>> = {
     "error.topicsRequired": "고민 영역을 최소 하나 선택해주세요",
     "error.privacyRequired": "개인정보 수집 및 이용에 동의해주세요",
     "error.confidentialityRequired": "비밀보장 약관에 동의해주세요",
+    "error.auccqRequired": "AUCCQ 모든 문항에 답변해주세요",
     
     // Messages
     "message.submitSuccess": "신청이 완료되었습니다!",
+    
+    // AUCCQ Scale (Step 5)
+    "form.step5.title": "5단계: 대학생활적응 척도",
+    "form.auccq.label": "대학생활적응 척도 (AUCCQ)",
+    "form.auccq.instruction": "각 문항에 대해 1~5점 중 해당하는 점수를 선택해주세요.",
+    "form.auccq.scale.1": "전혀 그렇지 않다",
+    "form.auccq.scale.2": "그렇지 않다",
+    "form.auccq.scale.3": "보통이다",
+    "form.auccq.scale.4": "그렇다",
+    "form.auccq.scale.5": "매우 그렇다",
+    "form.auccq.q1": "나는 현재 학업 성적에 만족한다.",
+    "form.auccq.q2": "나는 반 친구들과 좋은 관계를 유지하고 있다.",
+    "form.auccq.q3": "나는 대학 과정을 처리할 수 있는 능력에 자신감이 있다.",
+    "form.auccq.q4": "나는 대학에서 내 목적의식을 찾았다.",
+    "form.auccq.q5": "나는 수업 토론에 참여하는 것이 편하다.",
+    "form.auccq.q6": "나는 학업과 개인 생활 사이의 균형을 잘 유지하고 있다.",
+    "form.auccq.q7": "나는 친구와 또래 친구들의 지원을 받고 있다고 느낀다.",
+    "form.auccq.q8": "나는 대학의 사회생활에 만족한다.",
+    "form.auccq.q9": "나는 수업에 참석하고 싶은 동기가 있다.",
+    "form.auccq.q10": "나는 대학생활에 잘 적응했다고 생각한다.",
+    "form.auccq.q11": "나는 학업으로 인한 스트레스를 받고 있다.",
+    "form.auccq.q12": "나는 새로운 친구를 사귀기 어렵다.",
+    "form.auccq.q13": "나는 대학에서 외로움을 느낀다.",
+    "form.auccq.q14": "나는 시간 관리에 어려움을 겪고 있다.",
+    "form.auccq.q15": "나는 미래 진로에 대해 불안감을 느낀다.",
+    "form.auccq.q16": "나는 향수병을 경험했다.",
+    "form.auccq.q17": "나는 대학의 기대감에 압도당한다고 느낀다.",
+    "form.auccq.q18": "나는 학업에 집중하기 어렵다.",
+    "form.auccq.q19": "나는 이 대학에 다니기로 한 결정에 자신감이 있다.",
+    "form.auccq.q20": "나는 이 대학을 다른 사람에게 추천하고 싶다.",
   },
   
   ja: {
@@ -342,9 +404,9 @@ const translations: Record<Language, Record<string, string>> = {
     "form.applicationType.direct": "自発的に申請（直接申請）",
     
     "form.counselorName.label": "カウンセラー名",
-    "form.counselorName.hint": "事前に紹介してくれたカウンセラーの名前を入力してください",
+    "form.counselorName.hint": "一緒に活動を進めるピアカウンセラーの名前を入力してください。",
     
-    "form.agreedSchedule.label": "約束されたカウンセリング時間",
+    "form.agreedSchedule.label": "約束された時間があれば記してください。",
     
     "form.availableTime.label": "カウンセリング可能時間",
     "form.availableTime.hint": "カウンセリング可能な曜日と時間を選択してください",
@@ -420,9 +482,40 @@ const translations: Record<Language, Record<string, string>> = {
     "error.topicsRequired": "悩みの分野を最低1つ選択してください",
     "error.privacyRequired": "個人情報の収集と使用に同意してください",
     "error.confidentialityRequired": "秘密保持契約に同意してください",
+    "error.auccqRequired": "AUCCQのすべての訪問に答えてください",
     
     // Messages
     "message.submitSuccess": "申請が完了しました！",
+    
+    // AUCCQ Scale (Step 5)
+    "form.step5.title": "ステップ5：大学生活適応尺度",
+    "form.auccq.label": "大学生活適応尺度（AUCCQ）",
+    "form.auccq.instruction": "各項目について、1～5点の中から該当する点数を選択してください。",
+    "form.auccq.scale.1": "全く同意しない",
+    "form.auccq.scale.2": "同意しない",
+    "form.auccq.scale.3": "どちらでもない",
+    "form.auccq.scale.4": "同意する",
+    "form.auccq.scale.5": "非常に同意する",
+    "form.auccq.q1": "私は現在の学業成績に満足している。",
+    "form.auccq.q2": "私はクラスメートと良好な関係を保っている。",
+    "form.auccq.q3": "私は大学の課程に対処できる能力に自信がある。",
+    "form.auccq.q4": "私は大学での自分の目的を見つけた。",
+    "form.auccq.q5": "私は授業での議論に参加することが快適である。",
+    "form.auccq.q6": "私は学業と個人生活のバランスを上手く保っている。",
+    "form.auccq.q7": "私は友人や同級生からのサポートを感じている。",
+    "form.auccq.q8": "私は大学での社会生活に満足している。",
+    "form.auccq.q9": "私は授業に参加したいというモチベーションがある。",
+    "form.auccq.q10": "私は大学生活に上手く適応していると思う。",
+    "form.auccq.q11": "私は学業によるストレスを感じている。",
+    "form.auccq.q12": "私は新しい友人を作ることが難しい。",
+    "form.auccq.q13": "私は大学で孤独を感じている。",
+    "form.auccq.q14": "私は時間管理に困難を感じている。",
+    "form.auccq.q15": "私は将来のキャリアについて不安を感じている。",
+    "form.auccq.q16": "私はホームシックを経験した。",
+    "form.auccq.q17": "私は大学の期待に圧倒されていると感じている。",
+    "form.auccq.q18": "私は学業に集中することが難しい。",
+    "form.auccq.q19": "私はこの大学に通うという決断に自信がある。",
+    "form.auccq.q20": "私はこの大学を他の人にお勧めしたい。",
   },
 };
 
