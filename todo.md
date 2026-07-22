@@ -124,11 +124,11 @@
 - [x] 다국어 지원 (button.home, button.applyAgain)
 
 ## 관리자 대시보드 구현
-- [ ] AdminDashboard.tsx 생성
-- [ ] 신청서 목록 조회
-- [ ] 신청서 상세 보기
-- [ ] 신청서 상태 관리
-- [ ] 다국어 지원
+- [x] AdminDashboard.tsx 생성
+- [x] 신청서 목록 조회 (tRPC getAll)
+- [x] 신청서 상세 보기 (Dialog)
+- [x] 신청서 상태 뤜 중단 (Badge)
+- [x] 다국어 지원 (70+ 번역 키)
 
 ## 최종 테스트
 - [ ] 한국어 전체 흐름 테스트
