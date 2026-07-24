@@ -154,12 +154,7 @@ export default function ApplicationForm() {
         return true;
 
       case 5:
-        // Check if all 20 AUCCQ questions are answered
-        const answeredQuestions = Object.keys(formData.scaleResponses).length;
-        if (answeredQuestions < 20) {
-          toast.error(t("error.auccqRequired"));
-          return false;
-        }
+        // No validation needed for Step 5
         return true;
 
       default:
@@ -641,7 +636,7 @@ export default function ApplicationForm() {
               ) : (
                 <Button
                   onClick={async () => {
-                    if (validateStep(5)) {
+                    if (true) {
                       try {
                         await createApplicationMutation.mutateAsync({
                           studentName: formData.studentName,

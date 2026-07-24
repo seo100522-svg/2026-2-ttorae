@@ -323,7 +323,7 @@ const translations: Record<Language, Record<string, string>> = {
     "error.nationalityRequired": "거주 국가를 입력해주세요",
     
     // Buttons
-    "button.prev": "뒠로",
+    "button.prev": "이전",
     "button.next": "다음",
     "button.home": "홈으로 돌아가기",
     "button.applyAgain": "다시 신청하기",
