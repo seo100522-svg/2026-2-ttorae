@@ -8,7 +8,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { AUCCQScale } from "@/components/AUCCQScale";
 import { toast } from "sonner";
 import { trpc } from "@/lib/trpc";
 import { useLocation } from "wouter";
@@ -29,10 +28,9 @@ interface FormData {
   counselorName: string;
   agreedSchedule: string;
   availableTimes: Array<{ day: string; startTime: string; endTime: string }>;
-  // Step 3: Topics & Scale
+  // Step 3: Topics
   topics: string[];
   additionalMessage: string;
-  scaleResponses: Record<number, number>;
   // Step 4: Agreements
   agreePrivacy: boolean;
   agreeConfidentiality: boolean;
@@ -59,7 +57,6 @@ export default function ApplicationForm() {
     availableTimes: [],
     topics: [],
     additionalMessage: "",
-    scaleResponses: {},
     agreePrivacy: false,
     agreeConfidentiality: false,
   });
@@ -203,6 +200,10 @@ export default function ApplicationForm() {
     }
   };
 
+  const handleMaxStep = () => {
+    return Math.min(currentStep, 4);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 py-12 px-4">
       <div className="max-w-3xl mx-auto">
@@ -215,7 +216,7 @@ export default function ApplicationForm() {
         {/* Step Indicator */}
         <div className="mb-8">
           <div className="flex justify-between items-center">
-            {[1, 2, 3, 4, 5].map((step) => (
+            {[1, 2, 3, 4].map((step) => (
               <div key={step} className="flex flex-col items-center flex-1">
                 <div
                   className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold transition-all ${
@@ -226,7 +227,7 @@ export default function ApplicationForm() {
                 >
                   {step}
                 </div>
-                {step < 5 && (
+                {step < 4 && (
                   <div
                     className={`flex-1 h-1 mx-2 mt-2 transition-all ${
                       step < currentStep ? "bg-slate-700" : "bg-slate-200"
@@ -595,27 +596,6 @@ export default function ApplicationForm() {
               </div>
             )}
 
-            {/* Step 5: AUCCQ Scale */}
-            {currentStep === 5 && (
-              <div className="space-y-6">
-                <div>
-                  <h2 className="text-xl font-semibold mb-2">{t("form.step5.title")}</h2>
-                </div>
-                <AUCCQScale
-                  responses={formData.scaleResponses}
-                  onResponseChange={(questionNumber, score) => {
-                    setFormData({
-                      ...formData,
-                      scaleResponses: {
-                        ...formData.scaleResponses,
-                        [questionNumber]: score,
-                      },
-                    });
-                  }}
-                />
-              </div>
-            )}
-
             {/* Navigation Buttons */}
             <div className="flex gap-3 pt-6 border-t">
               <Button
@@ -626,7 +606,7 @@ export default function ApplicationForm() {
               >
                 {t("button.prev")}
               </Button>
-              {currentStep < 5 ? (
+              {currentStep < 4 ? (
                 <Button
                   onClick={handleNext}
                   className="flex-1 bg-slate-700 hover:bg-slate-800"
