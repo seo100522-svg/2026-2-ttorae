@@ -3,10 +3,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useLocation } from "wouter";
 import { Globe } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useState } from "react";
+import AdminLoginModal from "@/components/AdminLoginModal";
 
 export default function Home() {
   const [, navigate] = useLocation();
   const { language, setLanguage, t } = useLanguage();
+  const [isAdminModalOpen, setIsAdminModalOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100">
@@ -58,9 +61,19 @@ export default function Home() {
             >
               {t("button.apply")}
             </Button>
+            <Button
+              onClick={() => setIsAdminModalOpen(true)}
+              variant="outline"
+              className="text-xs"
+            >
+              {t("button.admin") || "Admin"}
+            </Button>
           </div>
         </div>
       </nav>
+
+      {/* Admin Login Modal */}
+      <AdminLoginModal isOpen={isAdminModalOpen} onClose={() => setIsAdminModalOpen(false)} />
 
       {/* Hero Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">

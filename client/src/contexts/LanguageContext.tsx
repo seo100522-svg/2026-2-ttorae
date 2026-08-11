@@ -41,6 +41,7 @@ const translations: Record<Language, Record<string, string>> = {
     // Application form
     "form.title": "Peer Counselor Application",
     "form.subtitle": "Apply to become a peer counselor for the Peers program",
+    "form.password": "Password",
     
     "form.step1.title": "Step 1: Basic Information",
     "form.step2.title": "Step 2: Reason for Application",
@@ -118,6 +119,7 @@ const translations: Record<Language, Record<string, string>> = {
     "placeholder.day": "Select day",
     "placeholder.additionalMessage": "Share your thoughts or concerns...",
     "placeholder.nationality": "e.g., China, Japan, USA",
+    "placeholder.password": "Enter password",
     
     "error.nationalityRequired": "Please enter your country of residence",
     
@@ -135,6 +137,10 @@ const translations: Record<Language, Record<string, string>> = {
     "button.exportExcel": "Export to Excel",
     "button.exporting": "Exporting...",
     "button.view": "View",
+    "button.admin": "Admin",
+    "button.login": "Login",
+    "button.loggingIn": "Logging in...",
+    "button.cancel": "Cancel",
     
     // Errors
     "error.nameRequired": "Please enter your name",
@@ -153,11 +159,15 @@ const translations: Record<Language, Record<string, string>> = {
     "error.auccqRequired": "Please answer all AUCCQ questions",
     "error.submitFailed": "Failed to submit the application",
     "error.exportFailed": "Failed to export data",
+    "error.passwordRequired": "Please enter password",
+    "error.invalidPassword": "Invalid password",
+    "error.loginFailed": "Login failed",
     
     // Messages
     "message.submitSuccess": "Application submitted successfully!",
     "message.submitSuccessDesc": "Your application has been successfully submitted. We will contact you soon.",
     "message.nextSteps": "Next Steps",
+    "message.adminLoginSuccess": "Admin login successful",
     "message.step1": "Step 1: We will review your application.",
     "message.step2": "Step 2: We will match you with an appropriate peer counselor.",
     "message.step3": "Step 3: The counselor will contact you to schedule your first meeting.",
@@ -322,6 +332,7 @@ const translations: Record<Language, Record<string, string>> = {
     "placeholder.day": "요일을 선택해주세요",
     "placeholder.additionalMessage": "고민이나 생각을 자유롭게 적어주세요...",
     "placeholder.nationality": "예: 중국, 일본, 미국",
+    "placeholder.password": "비밀번호를 입력해주세요",
     
     "error.nationalityRequired": "거주 국가를 입력해주세요",
     
@@ -339,6 +350,10 @@ const translations: Record<Language, Record<string, string>> = {
     "button.exportExcel": "엑셀로 다운로드",
     "button.exporting": "다운로드 중...",
     "button.view": "보기",
+    "button.admin": "관리자",
+    "button.login": "로그인",
+    "button.loggingIn": "로그인 중...",
+    "button.cancel": "취소",
     
     // Errors
     "error.nameRequired": "이름을 입력해주세요",
@@ -356,7 +371,11 @@ const translations: Record<Language, Record<string, string>> = {
     "error.confidentialityRequired": "비밀보장 약관에 동의해주세요",
     "error.auccqRequired": "AUCCQ 모든 문항에 답변해주세요",
     "error.submitFailed": "신청 제출에 실패했습니다",
-    "error.exportFailed": "데이터 내보내기에 실패했습니다",  
+    "error.exportFailed": "데이터 내보내기에 실패했습니다",
+    "error.passwordRequired": "비밀번호를 입력해주세요",
+    "error.invalidPassword": "비밀번호가 잘못되었습니다",
+    "error.loginFailed": "로그인에 실패했습니다",
+    
     // Messages
     "message.submitSuccess": "신청이 완료되었습니다!",
     "message.submitSuccessDesc": "신청이 성공적으로 완료되었습니다. 곧 담당자가 연락드리겠습니다.",
@@ -542,6 +561,10 @@ const translations: Record<Language, Record<string, string>> = {
     "button.exportExcel": "Excelにエクスポート",
     "button.exporting": "エクスポート中...",
     "button.view": "表示",
+    "button.admin": "管理者",
+    "button.login": "ログイン",
+    "button.loggingIn": "ログイン中...",
+    "button.cancel": "キャンセル",
     
     // Errors
     "error.nameRequired": "名前を入力してください",
@@ -560,6 +583,9 @@ const translations: Record<Language, Record<string, string>> = {
     "error.auccqRequired": "AUCCQのすべての訪問に答えてください",
     "error.submitFailed": "申請の送信に失敗しました",
     "error.exportFailed": "データのエクスポートに失敗しました",
+    "error.passwordRequired": "パスワードを入力してください",
+    "error.invalidPassword": "パスワードが間違っています",
+    "error.loginFailed": "ログインに失敗しました",
     
     // Messages
     "message.submitSuccess": "申請が完了しました！",
