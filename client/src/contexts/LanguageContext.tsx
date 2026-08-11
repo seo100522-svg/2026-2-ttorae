@@ -132,6 +132,9 @@ const translations: Record<Language, Record<string, string>> = {
     "button.delete": "Delete",
     "button.apply": "Apply",
     "button.applyNow": "Apply Now",
+    "button.exportExcel": "Export to Excel",
+    "button.exporting": "Exporting...",
+    "button.view": "View",
     
     // Errors
     "error.nameRequired": "Please enter your name",
@@ -148,7 +151,8 @@ const translations: Record<Language, Record<string, string>> = {
     "error.privacyRequired": "Please agree to the privacy policy",
     "error.confidentialityRequired": "Please agree to the confidentiality agreement",
     "error.auccqRequired": "Please answer all AUCCQ questions",
-    "error.submitFailed": "Failed to submit application",
+    "error.submitFailed": "Failed to submit the application",
+    "error.exportFailed": "Failed to export data",
     
     // Messages
     "message.submitSuccess": "Application submitted successfully!",
@@ -208,7 +212,6 @@ const translations: Record<Language, Record<string, string>> = {
     "table.status": "Status",
     "table.submittedAt": "Submitted At",
     "table.actions": "Actions",
-    "button.view": "View",
     "placeholder.notAvailable": "N/A",
   },
   
@@ -333,6 +336,9 @@ const translations: Record<Language, Record<string, string>> = {
     "button.delete": "삭제",
     "button.apply": "신청하기",
     "button.applyNow": "신청하기",
+    "button.exportExcel": "엑셀로 다운로드",
+    "button.exporting": "다운로드 중...",
+    "button.view": "보기",
     
     // Errors
     "error.nameRequired": "이름을 입력해주세요",
@@ -349,8 +355,8 @@ const translations: Record<Language, Record<string, string>> = {
     "error.privacyRequired": "개인정보 수집 및 이용에 동의해주세요",
     "error.confidentialityRequired": "비밀보장 약관에 동의해주세요",
     "error.auccqRequired": "AUCCQ 모든 문항에 답변해주세요",
-    "error.submitFailed": "신청 제출 실패",
-    
+    "error.submitFailed": "신청 제출에 실패했습니다",
+    "error.exportFailed": "데이터 내보내기에 실패했습니다",  
     // Messages
     "message.submitSuccess": "신청이 완료되었습니다!",
     "message.submitSuccessDesc": "신청이 성공적으로 완료되었습니다. 곧 담당자가 연락드리겠습니다.",
@@ -409,7 +415,6 @@ const translations: Record<Language, Record<string, string>> = {
     "table.status": "상태",
     "table.submittedAt": "제출 시간",
     "table.actions": "작업",
-    "button.view": "보기",
     "placeholder.notAvailable": "N/A",
   },
   
@@ -533,7 +538,10 @@ const translations: Record<Language, Record<string, string>> = {
     "button.addTime": "時間を追加",
     "button.delete": "削除",
     "button.apply": "申請する",
-    "button.applyNow": "申請する",
+    "button.applyNow": "今すぐ申請する",
+    "button.exportExcel": "Excelにエクスポート",
+    "button.exporting": "エクスポート中...",
+    "button.view": "表示",
     
     // Errors
     "error.nameRequired": "名前を入力してください",
@@ -551,6 +559,7 @@ const translations: Record<Language, Record<string, string>> = {
     "error.confidentialityRequired": "秘密保持契約に同意してください",
     "error.auccqRequired": "AUCCQのすべての訪問に答えてください",
     "error.submitFailed": "申請の送信に失敗しました",
+    "error.exportFailed": "データのエクスポートに失敗しました",
     
     // Messages
     "message.submitSuccess": "申請が完了しました！",
@@ -610,7 +619,6 @@ const translations: Record<Language, Record<string, string>> = {
     "table.status": "ステータス",
     "table.submittedAt": "提出日時",
     "table.actions": "アクション",
-    "button.view": "表示",
     "placeholder.notAvailable": "N/A",
   },
 };

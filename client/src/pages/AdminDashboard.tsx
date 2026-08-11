@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -7,14 +6,86 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { useLanguage } from "@/contexts/LanguageContext";
 import { trpc } from "@/lib/trpc";
 import { Spinner } from "@/components/ui/spinner";
+import { useState } from "react";
 
 export default function AdminDashboard() {
   const { t, language } = useLanguage();
   const [selectedApplication, setSelectedApplication] = useState<any>(null);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
+  const [isExporting, setIsExporting] = useState(false);
 
   // Fetch all applications
   const { data: applications, isLoading } = trpc.applications.getAll.useQuery();
+  const { data: exportData } = trpc.applications.exportToExcel.useQuery();
+
+  const handleExportToExcel = async () => {
+    if (!applications || applications.length === 0) {
+      alert(t("admin.noApplications"));
+      return;
+    }
+
+    setIsExporting(true);
+    try {
+      // Create CSV content
+      const headers = [
+        t("table.id"),
+        t("table.studentName"),
+        t("form.studentId"),
+        t("form.phoneNumber"),
+        t("form.college"),
+        t("form.department"),
+        t("form.gender"),
+        t("form.grade"),
+        t("form.nationality"),
+        t("table.applicationType"),
+        t("form.counselorName"),
+        t("form.topics"),
+        t("form.additionalMessage"),
+        t("table.status"),
+        t("table.submittedAt"),
+      ];
+
+      const rows = applications.map((app: any) => [
+        app.id,
+        app.studentName,
+        app.studentId,
+        app.phoneNumber,
+        app.college,
+        app.department,
+        app.gender === "male" ? t("form.gender.male") : app.gender === "female" ? t("form.gender.female") : t("form.gender.other"),
+        app.grade,
+        app.nationality || "-",
+        app.applicationType === "pre_arranged" ? t("form.applicationType.preArranged") : t("form.applicationType.direct"),
+        app.counselorName || "-",
+        app.topics ? JSON.parse(app.topics).join(", ") : "-",
+        app.additionalMessage || "-",
+        app.status === "pending" ? t("status.pending") : app.status === "matched" ? t("status.matched") : t("status.cancelled"),
+        new Date(app.createdAt).toLocaleDateString(language === "ko" ? "ko-KR" : language === "ja" ? "ja-JP" : "en-US"),
+      ]);
+
+      // Create CSV string
+      const csvContent = [
+        headers.map(h => `"${h}"`).join(","),
+        ...rows.map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(",")),
+      ].join("\n");
+
+      // Create blob and download
+      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+      const link = document.createElement("a");
+      const url = URL.createObjectURL(blob);
+      link.setAttribute("href", url);
+      link.setAttribute("download", `applications_${new Date().toISOString().split('T')[0]}.csv`);
+      link.style.visibility = "hidden";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error("Export error:", error);
+      alert(t("error.exportFailed") || "Export failed");
+    } finally {
+      setIsExporting(false);
+    }
+  };
 
   const getStatusBadge = (status: string) => {
     const statusMap: Record<string, { label: string; variant: "default" | "secondary" | "destructive" }> = {
@@ -43,8 +114,19 @@ export default function AdminDashboard() {
     <div className="min-h-screen bg-background p-8">
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">{t("admin.title")}</h1>
-          <p className="text-muted-foreground">{t("admin.description")}</p>
+          <div className="flex justify-between items-center mb-4">
+            <div>
+              <h1 className="text-3xl font-bold mb-2">{t("admin.title")}</h1>
+              <p className="text-muted-foreground">{t("admin.description")}</p>
+            </div>
+            <Button
+              onClick={handleExportToExcel}
+              disabled={isExporting || !applications || applications.length === 0}
+              className="bg-green-600 hover:bg-green-700"
+            >
+              {isExporting ? t("button.exporting") || "Exporting..." : t("button.exportExcel") || "Export to Excel"}
+            </Button>
+          </div>
         </div>
 
         <Card>

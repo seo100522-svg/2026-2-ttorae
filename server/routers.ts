@@ -108,6 +108,10 @@ export const appRouter = router({
     getAll: publicProcedure.query(async () => {
       return await getAllApplications();
     }),
+    exportToExcel: publicProcedure.query(async () => {
+      const applications = await getAllApplications();
+      return applications;
+    }),
   }),
 });
 
