@@ -13,6 +13,26 @@ export default function AdminDashboard() {
   const [selectedApplication, setSelectedApplication] = useState<any>(null);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
+  const [updatingId, setUpdatingId] = useState<number | null>(null);
+
+  const utils = trpc.useUtils();
+  const updateStatusMutation = trpc.applications.updateStatus.useMutation({
+    onSuccess: () => {
+      utils.applications.getAll.invalidate();
+      setUpdatingId(null);
+      alert(t("admin.statusUpdated") || "Status updated successfully");
+    },
+    onError: (error) => {
+      setUpdatingId(null);
+      alert(t("admin.statusUpdateFailed") || "Failed to update status");
+      console.error(error);
+    },
+  });
+
+  const handleStatusChange = (id: number, newStatus: "pending" | "matched" | "cancelled") => {
+    setUpdatingId(id);
+    updateStatusMutation.mutate({ id, status: newStatus });
+  };
 
   // Fetch all applications
   const { data: applications, isLoading } = trpc.applications.getAll.useQuery();
@@ -333,7 +353,35 @@ export default function AdminDashboard() {
               {/* Status */}
               <div>
                 <h3 className="font-semibold mb-3">{t("admin.status")}</h3>
-                <div>{getStatusBadge(selectedApplication.status)}</div>
+                <div className="flex items-center gap-4">
+                  {getStatusBadge(selectedApplication.status)}
+                  <div className="flex gap-2">
+                    <Button
+                      size="sm"
+                      variant={selectedApplication.status === "pending" ? "default" : "outline"}
+                      disabled={updatingId === selectedApplication.id}
+                      onClick={() => handleStatusChange(selectedApplication.id, "pending")}
+                    >
+                      {t("status.pending")}
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant={selectedApplication.status === "matched" ? "default" : "outline"}
+                      disabled={updatingId === selectedApplication.id}
+                      onClick={() => handleStatusChange(selectedApplication.id, "matched")}
+                    >
+                      {t("status.matched")}
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant={selectedApplication.status === "cancelled" ? "destructive" : "outline"}
+                      disabled={updatingId === selectedApplication.id}
+                      onClick={() => handleStatusChange(selectedApplication.id, "cancelled")}
+                    >
+                      {t("status.cancelled")}
+                    </Button>
+                  </div>
+                </div>
               </div>
 
               {/* Submission Date */}

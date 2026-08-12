@@ -141,3 +141,13 @@ export async function getScaleResponseByApplicationId(applicationId: number) {
 }
 
 // TODO: add feature queries here as your schema grows.
+
+export async function updateApplicationStatus(id: number, status: "pending" | "matched" | "cancelled") {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Database not available");
+  }
+
+  await db.update(applications).set({ status }).where(eq(applications.id, id));
+  return { success: true, id, status };
+}

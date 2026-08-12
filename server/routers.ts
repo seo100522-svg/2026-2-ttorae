@@ -3,7 +3,7 @@ import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, router, protectedProcedure } from "./_core/trpc";
 import { z } from "zod";
-import { createApplication, createScaleResponse, getAllApplications } from "./db";
+import { createApplication, createScaleResponse, getAllApplications, updateApplicationStatus } from "./db";
 
 export const appRouter = router({
     // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
@@ -112,6 +112,16 @@ export const appRouter = router({
       const applications = await getAllApplications();
       return applications;
     }),
+    updateStatus: publicProcedure
+      .input(
+        z.object({
+          id: z.number(),
+          status: z.enum(["pending", "matched", "cancelled"]),
+        })
+      )
+      .mutation(async ({ input }) => {
+        return await updateApplicationStatus(input.id, input.status);
+      }),
   }),
 });
 
