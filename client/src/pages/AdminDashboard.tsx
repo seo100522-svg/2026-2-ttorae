@@ -26,7 +26,7 @@ export default function AdminDashboard() {
 
     setIsExporting(true);
     try {
-      // Create CSV content
+      // Create CSV content with all input fields
       const headers = [
         t("table.id"),
         t("table.studentName"),
@@ -36,37 +36,71 @@ export default function AdminDashboard() {
         t("form.department"),
         t("form.gender"),
         t("form.grade"),
+        t("form.nationalityType"),
         t("form.nationality"),
         t("table.applicationType"),
-        t("form.counselorName"),
-        t("form.topics"),
-        t("form.additionalMessage"),
+        t("form.counselorName.label"),
+        t("form.agreedSchedule.label"),
+        t("form.availableTimes.label") || "Available Times",
+        t("form.topics.label"),
+        t("form.additionalMessage.label"),
         t("table.status"),
         t("table.submittedAt"),
       ];
 
-      const rows = applications.map((app: any) => [
-        app.id,
-        app.studentName,
-        app.studentId,
-        app.phoneNumber,
-        app.college,
-        app.department,
-        app.gender === "male" ? t("form.gender.male") : app.gender === "female" ? t("form.gender.female") : t("form.gender.other"),
-        app.grade,
-        app.nationality || "-",
-        app.applicationType === "pre_arranged" ? t("form.applicationType.preArranged") : t("form.applicationType.direct"),
-        app.counselorName || "-",
-        app.topics ? JSON.parse(app.topics).join(", ") : "-",
-        app.additionalMessage || "-",
-        app.status === "pending" ? t("status.pending") : app.status === "matched" ? t("status.matched") : t("status.cancelled"),
-        new Date(app.createdAt).toLocaleDateString(language === "ko" ? "ko-KR" : language === "ja" ? "ja-JP" : "en-US"),
-      ]);
+      const rows = applications.map((app: any) => {
+        let parsedTimes = "-";
+        try {
+          if (app.availableTimes) {
+            const times = typeof app.availableTimes === "string" ? JSON.parse(app.availableTimes) : app.availableTimes;
+            if (Array.isArray(times) && times.length > 0) {
+              parsedTimes = times.map((slot: any) => `${slot.day} ${slot.startTime}~${slot.endTime}`).join("; ");
+            }
+          }
+        } catch (e) {
+          parsedTimes = app.availableTimes || "-";
+        }
 
-      // Create CSV string
-      const csvContent = [
+        let parsedTopics = "-";
+        try {
+          if (app.topics) {
+            const topicsArr = typeof app.topics === "string" ? JSON.parse(app.topics) : app.topics;
+            if (Array.isArray(topicsArr)) {
+              parsedTopics = topicsArr.join(", ");
+            } else {
+              parsedTopics = String(app.topics);
+            }
+          }
+        } catch (e) {
+          parsedTopics = app.topics || "-";
+        }
+
+        return [
+          app.id,
+          app.studentName,
+          app.studentId,
+          app.phoneNumber,
+          app.college,
+          app.department,
+          app.gender === "male" ? t("form.gender.male") : app.gender === "female" ? t("form.gender.female") : t("form.gender.other"),
+          app.grade || "-",
+          app.nationalityType === "local" ? (language === "ko" ? "내국인" : language === "ja" ? "国内学生" : "Local") : (language === "ko" ? "유학생" : language === "ja" ? "留学生" : "International"),
+          app.nationality || "-",
+          app.applicationType === "pre_arranged" ? t("form.applicationType.preArranged") : t("form.applicationType.direct"),
+          app.counselorName || "-",
+          app.agreedSchedule || "-",
+          parsedTimes,
+          parsedTopics,
+          app.storyDetails || "-",
+          app.status === "pending" ? t("status.pending") : app.status === "matched" ? t("status.matched") : t("status.cancelled"),
+          new Date(app.createdAt).toLocaleString(language === "ko" ? "ko-KR" : language === "ja" ? "ja-JP" : "en-US"),
+        ];
+      });
+
+      // Create CSV string with BOM for Excel Korean support (\uFEFF)
+      const csvContent = "\uFEFF" + [
         headers.map(h => `"${h}"`).join(","),
-        ...rows.map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(",")),
+        ...rows.map(row => row.map(cell => `"${String(cell ?? "").replace(/"/g, '""')}"`).join(",")),
       ].join("\n");
 
       // Create blob and download
@@ -74,11 +108,12 @@ export default function AdminDashboard() {
       const link = document.createElement("a");
       const url = URL.createObjectURL(blob);
       link.setAttribute("href", url);
-      link.setAttribute("download", `applications_${new Date().toISOString().split('T')[0]}.csv`);
+      link.setAttribute("download", `ttoerae_applications_${new Date().toISOString().split('T')[0]}.csv`);
       link.style.visibility = "hidden";
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+      URL.revokeObjectURL(url);
     } catch (error) {
       console.error("Export error:", error);
       alert(t("error.exportFailed") || "Export failed");
